@@ -12,9 +12,7 @@ namespace Library
         {
             
         }
-        //Lista que contiene los números de ID a los que se ha consultado acerca de este parámetro.
-        //Se utiliza para controlar el flujo de COR.
-        private List<long> UsuariosPreguntados = new List<long>();
+
         /// <summary>
         /// Método que corresponde al patrón Chain of Responsibility.
         /// En caso de que el atributo Interes correspondiente al Perfil que envía el mensaje
@@ -45,7 +43,7 @@ namespace Library
                 else
                 {
                     Console.WriteLine("Proceso Interes");
-                    BibliotecaPerfiles.GetUsuario(m.Id).Interes = m.Contenido;
+                    EditorPerfil.SetInteres(m.Id, m.Contenido);
                 }
             }
             else

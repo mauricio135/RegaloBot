@@ -16,9 +16,7 @@ namespace Library
         {
             this.Siguiente = new ControlRelacion();
         }
-        //Lista que contiene los números de ID a los que se ha consultado acerca de este parámetro.
-        //Se utiliza para controlar el flujo de COR.
-        private List<long> UsuariosPreguntados = new List<long>();
+
         /// <summary>
         /// Método que corresponde al patrón Chain of Responsibility.
         /// En caso de que el género correspondiente al Perfil que envía el mensaje
@@ -48,7 +46,7 @@ namespace Library
                 else
                 {
                     Console.WriteLine("Proceso Genero");
-                    BibliotecaPerfiles.GetUsuario(m.Id).Genero = m.Contenido;
+                    EditorPerfil.SetGenero(m.Id, m.Contenido);
                     //Si está todo OK, paso al siguiente control
                     Siguiente.Handle(m);
                 }
