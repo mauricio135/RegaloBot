@@ -10,7 +10,7 @@ namespace Library
     {
         public ControlInteres()
         {
-            
+            this.Siguiente = new Busqueda();            
         }
 
         /// <summary>
@@ -44,6 +44,7 @@ namespace Library
                 {
                     Console.WriteLine("Proceso Interes");
                     EditorPerfil.SetInteres(m.Id, m.Contenido);
+                    Siguiente.Handle(m);
                 }
             }
             else
