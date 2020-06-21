@@ -17,9 +17,9 @@ namespace Library
                 this.Siguiente.Handle(m);
             }
         }
-        public virtual void Preguntar()
+        public virtual void Preguntar(long id)
         {
-            Console.WriteLine("Pregunta");
+            Respuesta.GenerarRespuesta(this, id);
         }
     }
 }

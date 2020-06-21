@@ -5,7 +5,5 @@ namespace Library
         IHandler Siguiente { set; }
 
         void Handle(Mensaje m);
-
-        void Preguntar();
     }
 }
