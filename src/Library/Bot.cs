@@ -5,8 +5,8 @@ namespace Library
     {
         public async static void IniciarBot()
         {
-            Consola.IniciarConsola();
-            TelegramAPI.IniciarTelegram();
+           // Consola.IniciarConsola();
+            await TelegramAPI.IniciarTelegram();
         }
 
     }

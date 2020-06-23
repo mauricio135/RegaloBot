@@ -7,11 +7,11 @@ namespace Library
     
     public class Consola
     {
-        public static void IniciarConsola()
+        public static async Task IniciarConsola()
         {
             string recibido = Console.ReadLine();
-            Plataforma.RecibirMensaje(recibido, 0);
-            Console.WriteLine("Pasé el await");
+           await  Plataforma.RecibirMensaje(recibido, 0);
+            Console.WriteLine("Captura de comandline");
         }
     }
 }
