@@ -1,23 +1,20 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Library;
 
 namespace Program
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main (string[] args)
         {
-            Bot.IniciarBot();
-            string entrada = Console.ReadLine();
-            while (entrada != "quit")
-            {
-                entrada = Console.ReadLine();
-            }
+            Bot.IniciarBot ();
 
             foreach (Perfil usuario in BibliotecaPerfiles.lista)
             {
-                Console.WriteLine($"{usuario}");
+                Console.WriteLine ($"{usuario}");
             }
+
         }
     }
 }

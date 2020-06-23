@@ -41,7 +41,7 @@ namespace Library
                 if (!UsuariosPreguntados.Contains(m.Id))
                 {
                     UsuariosPreguntados.Add(m.Id);
-                    Preguntar();
+                    Preguntar(m.Id);
                 }
                 else
                 {
@@ -61,10 +61,6 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un tipo de relación.
         /// </summary>
-        public override void Preguntar()
-        {
-            Console.WriteLine("Pregunto Relacion");
-        }
 
     }
 }

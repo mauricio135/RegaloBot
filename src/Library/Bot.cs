@@ -1,12 +1,17 @@
 using Telegram.Bot.Examples.Echo;
+using System;
 namespace Library
 {
     public class Bot
     {
-        public async static void IniciarBot()
+        public async static void IniciarBot ()
         {
-            Consola.IniciarConsola();
-            TelegramAPI.IniciarTelegram();
+            
+            var TelegramAsync = TelegramAPI.IniciarTelegram ();
+            var commandlineAsync = Consola.IniciarConsolaAsync();
+
+        
+          
         }
 
     }
