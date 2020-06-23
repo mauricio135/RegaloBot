@@ -24,17 +24,21 @@ namespace Telegram.Bot.Examples.Echo
         /// </summary>
         private static string Token = "1028487705:AAFJ_hNrtFc2T4xhdIC4MYUZlXHBmVWfkaQ";
 
-        public static void IniciarTelegram()
+        public static async Task IniciarTelegram()
         {
             Bot = new TelegramBotClient(Token);
             var cts = new CancellationTokenSource();
 
-            Bot.StartReceiving(
+             Bot.StartReceiving(
                 new DefaultUpdateHandler(HandleUpdateAsync, HandleErrorAsync),
                 cts.Token
+                
             );
+            
 
             Console.WriteLine($"Bot iniciado");
+            // Esperamos a que el usuario aprete Enter en la consola para terminar el bot.
+            //Console.ReadLine();
         }
 
         /// <summary>
