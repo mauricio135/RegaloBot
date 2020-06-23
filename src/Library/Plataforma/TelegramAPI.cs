@@ -11,8 +11,8 @@ using Telegram.Bot.Types.InputFiles;
 using Library;
 
 namespace Telegram.Bot.Examples.Echo
-{
-    public class TelegramAPI
+{ 
+        public class TelegramAPI
     {
         /// <summary>
         /// La instancia del bot.
@@ -82,6 +82,12 @@ namespace Telegram.Bot.Examples.Echo
         {
             Console.WriteLine($"Received a message from {message.From.FirstName} saying: {message.Text}");
             await Plataforma.RecibirMensaje(message.Text, message.Chat.Id);
+        }
+
+
+        public static async void Contestar(long id , string respuesta)
+        {
+              await Bot.SendTextMessageAsync( id ,respuesta);
         }
 
 

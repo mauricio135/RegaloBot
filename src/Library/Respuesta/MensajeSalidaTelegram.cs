@@ -1,3 +1,5 @@
+using Telegram.Bot.Examples.Echo;
+
 namespace Library
 {
     public class MensajeSalidaTelegram: MensajeSalida
@@ -6,6 +8,7 @@ namespace Library
 
         public MensajeSalidaTelegram(string cont, long num) : base(cont, num)
         {
+         TelegramAPI.Contestar(num,cont);
         }
 
         public string Imagen

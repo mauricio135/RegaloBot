@@ -7,7 +7,7 @@ namespace Library
         {
             string archivo = DefinirFrase(tipo);
             string contenido = BuscarFrase(archivo);
-            MensajeSalida mensaje= new MensajeSalida(contenido, id);
+            MensajeSalida mensaje= new MensajeSalidaTelegram(contenido, id);
             BandejaSalida.EnviarMensaje(mensaje);
         }
 
