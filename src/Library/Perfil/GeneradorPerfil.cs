@@ -20,7 +20,9 @@ namespace Library
             if (!deposito.ExisteUsuario(mensaje.Id))
             {
                 deposito.CrearUsuario(mensaje.Id);
-                Console.WriteLine("Hola!");
+
+                string pregunta = "Bienvenido! Se ha creado un nuevo Perfil";
+                 Respuesta.GenerarRespuesta(pregunta,mensaje.Id);
             }
                
             handler.Handle(mensaje);
