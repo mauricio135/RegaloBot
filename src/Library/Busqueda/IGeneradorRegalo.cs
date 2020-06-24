@@ -2,6 +2,6 @@ namespace Library
 {
     public interface IGeneradorRegalo
     {
-        string SugerenciaRegalo(Perfil usuario);
+        string SugerenciaRegalo(long idUsuario);
     }
 }

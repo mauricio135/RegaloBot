@@ -4,6 +4,6 @@ namespace Library
 {
     public interface ITienda
     {
-        List<string> BuscarRegalo(string busqueda);
+        List<Regalo> BuscarRegalo(string busqueda);
     }
 }

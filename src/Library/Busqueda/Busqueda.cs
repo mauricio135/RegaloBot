@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Library
 {
     public class Busqueda: BaseHandler
@@ -6,6 +8,7 @@ namespace Library
         private ITienda tienda;
         private IGeneradorRegalo generadorRegalo;
         private IProcesadorSugerencias procesadorSugerencias;
+        private ImpresoraRegalo impresora;
         public ITienda Tienda
         {
             set => tienda = value;
@@ -18,6 +21,10 @@ namespace Library
         {
             set => procesadorSugerencias = value;
         }
+        public ImpresoraRegalo Impresora
+        {
+            set => impresora = value;
+        }
 
         public Busqueda()
         {
@@ -26,7 +33,13 @@ namespace Library
 
         public void BuscarRegalo (long idPerfil)
         {
-
+            string regaloSugerido = generadorRegalo.SugerenciaRegalo(idPerfil);
+            List<Regalo> regalos = tienda.BuscarRegalo(regaloSugerido);
+            this.procesadorSugerencias.ProcesarRegalos(regalos);
+            foreach (Regalo regalo in regalos)
+            {
+                ImpresoraRegalo.EnviarRegalo(regalo, idPerfil);
+            }
         }
 
 
