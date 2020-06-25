@@ -8,7 +8,8 @@ namespace Library
         private string genero;
         private string relacion;
         private string interes;
-
+        private int precioMin = -1;
+        private int precioMax = -1;
         public long Id
         {
             get => id;
@@ -35,6 +36,16 @@ namespace Library
             get => interes;
             set => interes = value;
         }
+        public int PrecioMin
+        {
+            get => precioMin;
+            set => precioMin = value;
+        }
+        public int PrecioMax
+        {
+            get => precioMax;
+            set => precioMax = value;
+        }
 
         public Perfil (long numero)
         {
@@ -42,7 +53,7 @@ namespace Library
         }
         public override string ToString()
         {
-            return $"Edad: {this.edad} / Genero: {this.genero} / Relacion: {this.Relacion} / Interes: {this.Interes}";
+            return $"Edad: {this.edad} / Genero: {this.genero} / Relacion: {this.Relacion} / Interes: {this.Interes} / Precio Mínimo: {this.PrecioMin} / Precio Máximo: {this.PrecioMax}";
         }
     }
 }
