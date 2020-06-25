@@ -1,6 +1,6 @@
 namespace Library
 {
-    public class MensajeSalida
+    public abstract class MensajeSalida
     {
         private string contenido;
         private long id;
@@ -15,10 +15,13 @@ namespace Library
             get => id;
             set => id = value;
         }
-        public MensajeSalida(string cont, long num)
+        public MensajeSalida (string cont, long num)
         {
             this.id = num;
             this.contenido = cont;
         }
+        public abstract void EnviarTexto();
+       
+
     }
 }
