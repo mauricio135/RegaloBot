@@ -7,7 +7,10 @@ namespace Library
     {
         public static void EnviarMensaje (MensajeSalida mensaje)
         {
-            if (mensaje.Id != 0)
+            
+
+
+           /* if (mensaje.Id != 0)
             {
                 TelegramAPI.Contestar (mensaje.Id, mensaje.Contenido);
             }
@@ -15,7 +18,7 @@ namespace Library
             {
                 Console.WriteLine (mensaje.Contenido);
             }
-
+*/
         }
 
     }
