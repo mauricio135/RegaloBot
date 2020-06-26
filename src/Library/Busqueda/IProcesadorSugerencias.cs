@@ -3,6 +3,6 @@ namespace Library
 {
     public interface IProcesadorSugerencias
     {
-        List<string> ProcesarRegalos(List<string> regalos);
+        List<Regalo> ProcesarRegalos(List<Regalo> regalos);
     }
 }

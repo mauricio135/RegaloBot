@@ -4,9 +4,11 @@ namespace Library
 {
     public class ProcesadorSimple : IProcesadorSugerencias
     {
-        public List<string> ProcesarRegalos(List<string> regalos)
+        public List<Regalo> ProcesarRegalos(List<Regalo> regalos)
         {
-            throw new System.NotImplementedException();
+            List <Regalo> resultado = new List<Regalo>();
+            resultado.Add(regalos[0]);
+            return resultado;
         }
     }
 }

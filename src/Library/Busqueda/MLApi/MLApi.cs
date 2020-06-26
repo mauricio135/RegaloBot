@@ -31,5 +31,13 @@ namespace PII_MLApi
             task.Wait();
             return task.Result;
         }
+
+        public static List<string> SearchTendencias (string categoria)
+        {
+            var scraper = new MLScrapper(categoria);
+            Task<List<string>> task = scraper.ScrapeTendencias(categoria);
+            task.Wait();
+            return task.Result;
+        }
     }
 }

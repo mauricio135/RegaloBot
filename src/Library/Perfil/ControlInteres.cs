@@ -10,7 +10,11 @@ namespace Library
     {
         public ControlInteres()
         {
-            this.Siguiente = new Busqueda();            
+            var directorMl = new DirectorML();
+            var builder = new BusquedaBuilder();
+            directorMl.TiendaBuilder = builder;
+            directorMl.BusquedaML();   
+            this.Siguiente = builder.GetBusqueda();            
         }
 
         /// <summary>

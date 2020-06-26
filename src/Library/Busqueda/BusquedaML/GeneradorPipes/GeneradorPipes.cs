@@ -5,7 +5,8 @@ namespace Library
         public string SugerenciaRegalo(long idUsuario)
         {
             Perfil target = BibliotecaPerfiles.GetUsuario(idUsuario);
-            return "pelota";
+            PipeInicial filtro = new PipeInicial();
+            return filtro.Filtrar(target);
         }
     }
 }

@@ -76,5 +76,37 @@ namespace PII_MLApi
             return results;
         }
 
+        /// <summary>
+        /// Parsea el HTML de respuesta para construir la lista de objetos
+        /// resultado.
+        /// </summary>
+        /// <param name="document">El HTML de respuesta de ML.</param>
+        /// <returns>Lista de objetos resultado.</returns>
+        protected virtual List<string> ParseTendencias(AngleSharp.Dom.IDocument document)
+        {
+            List<string> results = new List<string>();
+
+            foreach(var item in document.QuerySelectorAll("li.searches__item"))
+            {
+                try
+                {
+                    string title = item.QuerySelector("a").InnerHtml.Trim();
+                    results.Add(title);
+                }
+                catch(NullReferenceException) { }
+            }
+
+            return results;
+        }
+
+        public virtual async Task<List<string>> ScrapeTendencias(string categoria)
+        {
+            this.url = $"https://tendencias.mercadolibre.com.uy/{categoria}";
+            var config = Configuration.Default.WithDefaultLoader();
+            var context = BrowsingContext.New(config);
+            var document = await context.OpenAsync(this.url);
+            return ParseTendencias(document);
+        }
+
     }
 }

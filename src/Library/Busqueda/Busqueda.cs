@@ -30,16 +30,24 @@ namespace Library
         {
             
         }
+        public override void Handle(Mensaje m)
+        {
+            this.BuscarRegalo(m.Id);
+        }
 
         public void BuscarRegalo (long idPerfil)
         {
-            string regaloSugerido = generadorRegalo.SugerenciaRegalo(idPerfil);
-            List<Regalo> regalos = tienda.BuscarRegalo(regaloSugerido);
-            this.procesadorSugerencias.ProcesarRegalos(regalos);
-            foreach (Regalo regalo in regalos)
+            for (int i = 0; i < 3; i++)
             {
-                ImpresoraRegalo.EnviarRegalo(regalo, idPerfil);
+                string regaloSugerido = generadorRegalo.SugerenciaRegalo(idPerfil);
+                List<Regalo> regalos = tienda.BuscarRegalo(regaloSugerido);
+                List<Regalo> resultados = this.procesadorSugerencias.ProcesarRegalos(regalos);
+                foreach (Regalo resultado in resultados)
+                {
+                    ImpresoraRegalo.EnviarRegalo(resultado, idPerfil);
+                } 
             }
+            
         }
 
 
