@@ -6,7 +6,7 @@ namespace Library
         {
             BibliotecaPerfiles.GetUsuario(idPerfil).Edad = edad;
         }
-        public static void SetGenero(long idPerfil, string genero)
+        public static void SetGenero(long idPerfil, TipoGenero genero)
         {
             BibliotecaPerfiles.GetUsuario(idPerfil).Genero = genero;
         }
