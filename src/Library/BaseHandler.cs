@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Library
 {
-    public class BaseHandler: IHandler
+    public abstract class  BaseHandler: IHandler
     {
         //Lista que contiene los números de ID a los que se ha consultado acerca de este parámetro.
         //Se utiliza para controlar el flujo de COR.
@@ -17,9 +17,7 @@ namespace Library
                 this.Siguiente.Handle(m);
             }
         }
-        public virtual void Preguntar(long id)
-        {
-            Respuesta.GenerarRespuesta(this, id);
-        }
+        public abstract void Preguntar(long id);
+        
     }
 }

@@ -33,6 +33,7 @@ namespace Library
         public override void Handle(Mensaje m)
         {
             this.BuscarRegalo(m.Id);
+            this.Preguntar(m.Id);
         }
 
         public void BuscarRegalo (long idPerfil)
@@ -50,6 +51,10 @@ namespace Library
             
         }
 
-
+        public override void Preguntar(long id)
+        {
+            string pregunta = Respuesta.DefinirFrase(this);
+            Respuesta.GenerarRespuesta(pregunta,id);
+        }
     }
 }

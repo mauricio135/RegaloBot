@@ -5,8 +5,8 @@ namespace Library
     {
         public static void EnviarRegalo (Regalo regalo, long idPerfil)
         {
-            //Respuesta.EnviaRegalo(regalo.ToString(), idPerfil);
-            Console.WriteLine(regalo.ToString());
+            Respuesta.EnviaRegalo(regalo.ToString(), idPerfil);
+           // Console.WriteLine(regalo.ToString());
         }
     }
 }

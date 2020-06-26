@@ -20,7 +20,9 @@ namespace Library
             if (!deposito.ExisteUsuario(mensaje.Id))
             {
                 deposito.CrearUsuario(mensaje.Id);
-                Console.WriteLine("Hola!");
+
+                string pregunta = "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial";
+                 Respuesta.GenerarRespuesta(pregunta,mensaje.Id);
             }
                
             handler.Handle(mensaje);
