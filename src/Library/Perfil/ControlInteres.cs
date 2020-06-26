@@ -10,7 +10,11 @@ namespace Library
     {
         public ControlInteres()
         {
-            
+            var directorMl = new DirectorML();
+            var builder = new BusquedaBuilder();
+            directorMl.TiendaBuilder = builder;
+            directorMl.BusquedaML();   
+            this.Siguiente = builder.GetBusqueda();            
         }
 
         /// <summary>
@@ -44,6 +48,7 @@ namespace Library
                 {
                     Console.WriteLine("Proceso Interes");
                     EditorPerfil.SetInteres(m.Id, m.Contenido);
+                    Siguiente.Handle(m);
                 }
             }
             else
