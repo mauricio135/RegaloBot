@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Library
 {
     /// <summary>
-    /// Quinto eslabón del patrón Chain Of Responsibility. Se encarga de recibir el valor de la edad
+    /// Quinto eslabón del patrón Chain Of Responsibility. Se encarga de recibir el valor del Precio Minimo
     /// del Perfil que se crea, efectuando los controles necesarios para obtener un  parámetro válido.
     /// </summary>
     public class ControlPrecioMin: BaseHandler
@@ -46,8 +46,8 @@ namespace Library
                 else
                 {
                     Console.WriteLine("Proceso Precio Minimo");
-                    int edad = Int32.Parse(m.Contenido);
-                    EditorPerfil.SetPrecioMin(m.Id, edad);
+                    int precioMin = Int32.Parse(m.Contenido);
+                    EditorPerfil.SetPrecioMin(m.Id, precioMin);
                     //Si está todo OK, paso al siguiente eslabón
                     Siguiente.Handle(m);
                 }
@@ -59,7 +59,7 @@ namespace Library
         }
         /// <summary>
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
-        /// pedido por un valor de Edad.
+        /// pedido por un valor de PrecioMin.
         /// </summary>
 
 

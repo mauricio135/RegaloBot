@@ -8,9 +8,13 @@ namespace Library
     /// </summary>
     public class ControlInteres: BaseHandler
     {
+         /// <summary>
+        /// Como ControlInteres contiene un objeto del tipo ControlPrecioMin (siguiente eslabón de COR), aplicamos
+        /// patrón Creator para asignarle a ControlInteres la responsabilidad de crear objetos ControlPrecioMin.
+        /// </summary>
         public ControlInteres()
         {
-            
+            this.Siguiente = new ControlPrecioMin();
         }
 
         /// <summary>
