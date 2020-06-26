@@ -18,5 +18,13 @@ namespace Library
         {
             BibliotecaPerfiles.GetUsuario(idPerfil).Interes = interes;
         }
+        public static void SetPrecioMin(long idPerfil, int precioMin)
+        {
+            BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMin = precioMin;
+        }
+        public static void SetPrecioMax(long idPerfil, int precioMax)
+        {
+            BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMax = precioMax;
+        }
     }
 }
