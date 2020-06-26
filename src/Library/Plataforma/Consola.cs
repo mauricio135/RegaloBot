@@ -13,18 +13,17 @@ namespace Library
             string recibido = Console.ReadLine ();
             while (recibido != "quit")
             {
-                await Plataforma.RecibirMensaje (recibido, 0);
-                Console.WriteLine ("Captura de CommandLine");
+                await Plataforma.RecibirMensaje (recibido, 0);                
                 recibido = Console.ReadLine ();
 
             }
             return recibido;
         }
-        public static Task<string> ReadlineAsync ()
+        /*  public static Task<string> ReadlineAsync ()
         {
             return Task.Run (() => Console.ReadLine ());
 
         }
-
+    */
     }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Library;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
-using Library;
 
 namespace Telegram.Bot.Examples.Echo
 {
@@ -19,24 +19,23 @@ namespace Telegram.Bot.Examples.Echo
         /// </summary>
         private static TelegramBotClient Bot;
 
-         /// <summary>
+        /// <summary>
         /// El token provisto por Telegram al crear el bot.
         /// </summary>
         private static string Token = "1028487705:AAFJ_hNrtFc2T4xhdIC4MYUZlXHBmVWfkaQ";
 
-        public static async Task IniciarTelegram()
+        public static async Task IniciarTelegram ()
         {
-            Bot = new TelegramBotClient(Token);
-            var cts = new CancellationTokenSource();
+            Bot = new TelegramBotClient (Token);
+            var cts = new CancellationTokenSource ();
 
-             Bot.StartReceiving(
-                new DefaultUpdateHandler(HandleUpdateAsync, HandleErrorAsync),
+            Bot.StartReceiving (
+                new DefaultUpdateHandler (HandleUpdateAsync, HandleErrorAsync),
                 cts.Token
-                
-            );
-            
 
-            Console.WriteLine($"Bot iniciado");
+            );
+
+            Console.WriteLine ($"Bot iniciado");
             // Esperamos a que el usuario aprete Enter en la consola para terminar el bot.
             //Console.ReadLine();
         }
@@ -49,19 +48,19 @@ namespace Telegram.Bot.Examples.Echo
         /// <param name="update"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task HandleUpdateAsync(Update update, CancellationToken cancellationToken)
+        public static async Task HandleUpdateAsync (Update update, CancellationToken cancellationToken)
         {
-            try 
+            try
             {
                 // sólo respondemos a mensajes de texto
                 if (update.Type == UpdateType.Message)
                 {
-                    await HandleMessageReceived(update.Message);
+                    await HandleMessageReceived (update.Message);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                await HandleErrorAsync(e, cancellationToken);
+                await HandleErrorAsync (e, cancellationToken);
             }
         }
 
@@ -72,9 +71,9 @@ namespace Telegram.Bot.Examples.Echo
         /// <param name="exception"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task HandleErrorAsync(Exception exception, CancellationToken cancellationToken)
+        public static Task HandleErrorAsync (Exception exception, CancellationToken cancellationToken)
         {
-            Console.WriteLine(exception.Message);
+            Console.WriteLine (exception.Message);
             return Task.CompletedTask;
         }
         /// <summary>
@@ -82,12 +81,32 @@ namespace Telegram.Bot.Examples.Echo
         /// </summary>
         /// <param name="message">El mensaje recibido</param>
         /// <returns></returns>
-        private static async Task HandleMessageReceived(Message message)
+        private static async Task HandleMessageReceived (Message message)
         {
-            Console.WriteLine($"Received a message from {message.From.FirstName} saying: {message.Text}");
-            await Plataforma.RecibirMensaje(message.Text, message.Chat.Id);
+            Console.WriteLine ($"Received a message from {message.From.FirstName} saying: {message.Text}");
+            await Plataforma.RecibirMensaje (message.Text, message.Chat.Id);
         }
 
+        public static async void Contestar (long id, string respuesta)
+        {
+            await Bot.SendTextMessageAsync (id, respuesta);
+      
+        }
+
+        public static async Task EnviarFoto (long id, string ruta)
+        {
+            await Bot.SendChatActionAsync (id, ChatAction.UploadPhoto);
+
+            string filePath = ruta;
+            var fileStream = new FileStream (filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var fileName = filePath.Split (Path.DirectorySeparatorChar).Last ();
+            await Bot.SendPhotoAsync (
+                chatId: id,
+                photo: new InputOnlineFile (fileStream, fileName),
+                caption: "te gusta?"
+            );
+        }
+        
 
     }
 }

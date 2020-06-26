@@ -14,7 +14,15 @@ namespace Library
         /// </summary>
         public ControlInteres()
         {
+<<<<<<< HEAD
             this.Siguiente = new ControlPrecioMin();
+=======
+            var directorMl = new DirectorML();
+            var builder = new BusquedaBuilder();
+            directorMl.TiendaBuilder = builder;
+            directorMl.BusquedaML();   
+            this.Siguiente = builder.GetBusqueda();            
+>>>>>>> master
         }
 
         /// <summary>
@@ -41,13 +49,14 @@ namespace Library
             {
                 if (!UsuariosPreguntados.Contains(m.Id))
                 {
-                    Console.WriteLine("Pregunto Interes");
+                    Preguntar(m.Id);
                     UsuariosPreguntados.Add(m.Id);
                 }
                 else
                 {
                     Console.WriteLine("Proceso Interes");
                     EditorPerfil.SetInteres(m.Id, m.Contenido);
+                    Siguiente.Handle(m);
                 }
             }
             else
@@ -59,6 +68,11 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un interés.
         /// </summary>
-
+            public override void Preguntar(long id)
+        {
+            string pregunta = Respuesta.DefinirFrase(this);
+            Respuesta.GenerarRespuesta(pregunta,id);
+            
+        }
     }
 }

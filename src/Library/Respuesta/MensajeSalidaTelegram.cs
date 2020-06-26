@@ -1,11 +1,14 @@
+using Telegram.Bot.Examples.Echo;
+
 namespace Library
 {
-    public class MensajeSalidaTelegram: MensajeSalida
+    public class MensajeSalidaTelegram : MensajeSalida
     {
         private string imagen;
 
-        public MensajeSalidaTelegram(string cont, long num) : base(cont, num)
+        public MensajeSalidaTelegram (string cont, long num) : base (cont, num)
         {
+            
         }
 
         public string Imagen
@@ -13,5 +16,15 @@ namespace Library
             get => imagen;
             set => imagen = value;
         }
+        public override void EnviarTexto ()
+        {
+            TelegramAPI.Contestar (this.Id, this.Contenido);
+        }
+         public override  async void EnviarImagen (string url) 
+        {
+            
+            await TelegramAPI.EnviarFoto (this.Id,url);
+        }
+
     }
 }
