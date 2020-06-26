@@ -47,7 +47,6 @@ namespace Library
                 }
                 else
                 {
-                    Console.WriteLine("Proceso Precio Maximo");
                     int precioMax = Int32.Parse(m.Contenido);
                     EditorPerfil.SetPrecioMax(m.Id, precioMax);
                     //Si está todo OK, paso al siguiente eslabón

@@ -45,7 +45,6 @@ namespace Library
                 }
                 else
                 {
-                    Console.WriteLine("Proceso edad");
                     int edad = Int32.Parse(m.Contenido);
                     EditorPerfil.SetEdad(m.Id, edad);
                     //Si está todo OK, paso al siguiente eslabón

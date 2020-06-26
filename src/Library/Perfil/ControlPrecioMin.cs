@@ -45,7 +45,6 @@ namespace Library
                 }
                 else
                 {
-                    Console.WriteLine("Proceso Precio Minimo");
                     int precioMin = Int32.Parse(m.Contenido);
                     EditorPerfil.SetPrecioMin(m.Id, precioMin);
                     //Si está todo OK, paso al siguiente eslabón

@@ -61,11 +61,11 @@ namespace Library
 
         public static string DefinirFrase (ControlEdad edad)
         {
-            return "Cuantos **años** tiene?";
+            return "Cuantos años tiene?";
         }
         public static string DefinirFrase (ControlGenero edad)
         {
-            return "Eres un **Hombre** o una **Mujer**?";
+            return "El regalo es para un Hombre o una Mujer?";
         }
         public static string DefinirFrase (BaseHandler defecto)
         {
@@ -74,20 +74,32 @@ namespace Library
 
         public static string DefinirFrase (ControlInteres interes)
         {
-            return "Cuales son tus **Intereses**?";
+            return "Cuales son sus Intereses?";
         }
         public static string DefinirFrase (ControlRelacion relacion)
         {
-            return "Cual es tu **relacion** con esta persona?";
+            return "Cual es tu relacion con esta persona?";
         }
         public static string DefinirFrase (GeneradorPerfil perfil)
         {
-            return "Bienvenido! se ha creado un nuevo Perfil!";
+            return "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial";
+;
         }
         public static string DefinirFrase (Busqueda busqueda)
         {
             return "Esta conforme con las Sugerencias?";
         }
+
+            public static string DefinirFrase (ControlPrecioMin precioMin)
+        {
+            return "Cual es el Precio Minimo que quieres Pagar?";
+        }
+               public static string DefinirFrase (ControlPrecioMax precioMin)
+        {
+            return "Cual es el Precio Máximo que puedes pagar por este regalo?";
+        }
+       
+         
 
     }
 }

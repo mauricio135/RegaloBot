@@ -45,7 +45,6 @@ namespace Library
                 }
                 else
                 {
-                    Console.WriteLine("Proceso Relacion");
                     EditorPerfil.SetRelacion(m.Id, m.Contenido);
                     //Si está todo OK, paso al siguiente control
                     Siguiente.Handle(m);
