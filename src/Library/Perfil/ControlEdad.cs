@@ -65,6 +65,8 @@ namespace Library
         {
             string pregunta = Respuesta.DefinirFrase(this);
             Respuesta.GenerarRespuesta(pregunta,id);
+
+            
             
         }
 

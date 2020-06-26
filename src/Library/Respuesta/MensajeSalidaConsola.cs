@@ -12,6 +12,11 @@ namespace Library
 
         }
 
+        public override void EnviarImagen(string ruta)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void EnviarTexto ()
         {
             Console.WriteLine (this.Contenido);

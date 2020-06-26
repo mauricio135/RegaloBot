@@ -8,23 +8,50 @@ namespace Library
         private static ILectorArchivos lectorArchivos;
         public static void GenerarRespuesta (string contenido, long id)
         {
-           //string cont = BuscarFrase (archivo);
-            MensajeSalida mensaje ;
+            //string cont = BuscarFrase (archivo);
+            MensajeSalida mensaje;
 
             switch (id)
             {
                 case 0:
-                         mensaje = new MensajeSalidaConsola (contenido, id);
-                break;
+                    mensaje = new MensajeSalidaConsola (contenido, id);
+                    break;
 
-                default :
-                         mensaje = new MensajeSalidaTelegram (contenido, id);
+                default:
+                    mensaje = new MensajeSalidaTelegram (contenido, id);
 
-                break;
+                    break;
 
             }
 
             BandejaSalida.EnviarMensaje (mensaje);
+
+        }
+
+        public static void EnviaRegalo (string regalo, long id)
+        {
+            MensajeSalida mensaje;
+
+            switch (id)
+            {
+                case 0:
+                    mensaje = new MensajeSalidaConsola (regalo, id);
+                    break;
+
+                default:
+                    mensaje = new MensajeSalidaTelegram (regalo, id);
+                    ImagenURL imagen = new ImagenURL ();
+                    imagen.GuardarImagen ("https://http2.mlstatic.com/D_NQ_NP_742328-MLU33039077458_112019-V.webp");
+                    
+                    MensajeSalidaTelegram men = (MensajeSalidaTelegram) mensaje;
+                    men.Imagen = (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
+                    
+                    break;
+
+            }
+
+            BandejaSalida.EnviarMensaje (mensaje);
+
         }
 
         public static string BuscarFrase (string archivo)

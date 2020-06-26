@@ -21,6 +21,7 @@ namespace Library
             this.contenido = cont;
         }
         public abstract void EnviarTexto();
+        public  abstract void EnviarImagen(string ruta);
        
 
     }

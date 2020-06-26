@@ -21,7 +21,7 @@ namespace Library
             {
                 deposito.CrearUsuario(mensaje.Id);
 
-                string pregunta = "Bienvenido! Se ha creado un nuevo Perfil";
+                string pregunta = "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial";
                  Respuesta.GenerarRespuesta(pregunta,mensaje.Id);
             }
                

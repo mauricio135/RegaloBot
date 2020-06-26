@@ -20,6 +20,11 @@ namespace Library
         {
             TelegramAPI.Contestar (this.Id, this.Contenido);
         }
+         public override  async void EnviarImagen (string url) 
+        {
+            
+            await TelegramAPI.EnviarFoto (this.Id,url);
+        }
 
     }
 }
