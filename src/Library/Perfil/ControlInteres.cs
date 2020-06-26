@@ -14,15 +14,7 @@ namespace Library
         /// </summary>
         public ControlInteres()
         {
-<<<<<<< HEAD
             this.Siguiente = new ControlPrecioMin();
-=======
-            var directorMl = new DirectorML();
-            var builder = new BusquedaBuilder();
-            directorMl.TiendaBuilder = builder;
-            directorMl.BusquedaML();   
-            this.Siguiente = builder.GetBusqueda();            
->>>>>>> master
         }
 
         /// <summary>

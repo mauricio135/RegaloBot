@@ -61,7 +61,12 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de PrecioMin.
         /// </summary>
-
+         public override void Preguntar(long id)
+        {
+            string pregunta = Respuesta.DefinirFrase(this);
+            Respuesta.GenerarRespuesta(pregunta,id);
+            
+        }
 
     }
 }

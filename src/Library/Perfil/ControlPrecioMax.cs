@@ -11,6 +11,11 @@ namespace Library
         
         public ControlPrecioMax()
         {
+            var directorMl = new DirectorML();
+            var builder = new BusquedaBuilder();
+            directorMl.TiendaBuilder = builder;
+            directorMl.BusquedaML();   
+            this.Siguiente = builder.GetBusqueda();
             
         }
         
@@ -58,7 +63,12 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de Precio Maximo.
         /// </summary>
-
+         public override void Preguntar(long id)
+        {
+            string pregunta = Respuesta.DefinirFrase(this);
+            Respuesta.GenerarRespuesta(pregunta,id);
+            
+        }
 
     }
 }
