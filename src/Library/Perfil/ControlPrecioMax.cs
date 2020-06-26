@@ -3,18 +3,15 @@ using System.Collections.Generic;
 namespace Library
 {
     /// <summary>
-    /// Quinto eslabón del patrón Chain Of Responsibility. Se encarga de recibir el valor de la edad
+    /// Sexto eslabón del patrón Chain Of Responsibility. Se encarga de recibir el valor de la edad
     /// del Perfil que se crea, efectuando los controles necesarios para obtener un  parámetro válido.
     /// </summary>
-    public class ControlPrecioMin: BaseHandler
+    public class ControlPrecioMax: BaseHandler
     {
-        /// <summary>
-        /// Como ControlPrecioMin contiene un objeto del tipo ControlPrecioMax (siguiente eslabón de COR), aplicamos
-        /// patrón Creator para asignarle a ControlPrecioMin la responsabilidad de crear objetos ControlPrecioMax.
-        /// </summary>
-        public ControlPrecioMin()
+        
+        public ControlPrecioMax()
         {
-            this.Siguiente = new ControlPrecioMax();
+            
         }
         
         /// <summary>
@@ -36,7 +33,7 @@ namespace Library
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
         public override void Handle(Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario(m.Id).PrecioMin == -1)
+            if (BibliotecaPerfiles.GetUsuario(m.Id).Edad == -1)
             {
                 if (!UsuariosPreguntados.Contains(m.Id))
                 {
@@ -45,9 +42,9 @@ namespace Library
                 }
                 else
                 {
-                    Console.WriteLine("Proceso Precio Minimo");
+                    Console.WriteLine("Proceso edad");
                     int edad = Int32.Parse(m.Contenido);
-                    EditorPerfil.SetPrecioMin(m.Id, edad);
+                    EditorPerfil.SetEdad(m.Id, edad);
                     //Si está todo OK, paso al siguiente eslabón
                     Siguiente.Handle(m);
                 }
