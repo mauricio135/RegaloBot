@@ -42,10 +42,10 @@ namespace Library
                     mensaje = new MensajeSalidaTelegram (regalo, id);
                     ImagenURL imagen = new ImagenURL ();
                     imagen.GuardarImagen ("https://http2.mlstatic.com/D_NQ_NP_742328-MLU33039077458_112019-V.webp");
-                    
+
                     MensajeSalidaTelegram men = (MensajeSalidaTelegram) mensaje;
                     men.Imagen = (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
-                    
+
                     break;
 
             }
@@ -83,6 +83,10 @@ namespace Library
         public static string DefinirFrase (GeneradorPerfil perfil)
         {
             return "Bienvenido! se ha creado un nuevo Perfil!";
+        }
+        public static string DefinirFrase (Busqueda busqueda)
+        {
+            return "Esta conforme con las Sugerencias?";
         }
 
     }

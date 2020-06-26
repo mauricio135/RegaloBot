@@ -41,7 +41,7 @@ namespace Library
             {
                 if (!UsuariosPreguntados.Contains(m.Id))
                 {
-                    Console.WriteLine("Pregunto Interes");
+                    Preguntar(m.Id);
                     UsuariosPreguntados.Add(m.Id);
                 }
                 else

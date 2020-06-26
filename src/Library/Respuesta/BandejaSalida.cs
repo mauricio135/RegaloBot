@@ -17,7 +17,7 @@ namespace Library
 
                 if (men.Imagen != null)
                 {
-                    mensaje.EnviarImagen (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
+                 //   mensaje.EnviarImagen (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
 
                 }
 

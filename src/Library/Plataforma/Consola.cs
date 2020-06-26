@@ -13,8 +13,7 @@ namespace Library
             string recibido = Console.ReadLine ();
             while (recibido != "quit")
             {
-                await Plataforma.RecibirMensaje (recibido, 0);
-                Console.WriteLine ("(Captura desde Consola)");
+                await Plataforma.RecibirMensaje (recibido, 0);                
                 recibido = Console.ReadLine ();
 
             }
