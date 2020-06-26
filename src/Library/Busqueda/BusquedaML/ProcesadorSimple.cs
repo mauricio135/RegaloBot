@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace Library
 {
@@ -7,7 +8,9 @@ namespace Library
         public List<Regalo> ProcesarRegalos(List<Regalo> regalos)
         {
             List <Regalo> resultado = new List<Regalo>();
-            resultado.Add(regalos[0]);
+            var random = new Random();
+            int indice = random.Next(regalos.Count);
+            resultado.Add(regalos[indice]);
             return resultado;
         }
     }
