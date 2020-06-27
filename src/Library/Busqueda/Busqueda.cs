@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+
 
 namespace Library
 {
@@ -32,9 +34,18 @@ namespace Library
         }
         public override void Handle(Mensaje m)
         {
-            this.BuscarRegalo(m.Id);
+            try
+            {                
+            this.BuscarRegalo(m.Id);            
             this.Preguntar(m.Id);
+            }   
+            catch (NullReferenceException)
+            {
+                Respuesta.ErrorApi(m.Id);
+
+            }         
         }
+    
 
         public void BuscarRegalo (long idPerfil)
         {

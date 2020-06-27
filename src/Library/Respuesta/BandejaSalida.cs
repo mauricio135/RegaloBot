@@ -15,17 +15,7 @@ namespace Library
                 MensajeSalidaTelegram men;
                 men = (MensajeSalidaTelegram) mensaje;
 
-                if (men.Imagen != null)
-                {
-                 //   mensaje.EnviarImagen (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
-
-                }
-
-            }
-            // 
-
-            // } 
-            //  mensaje.Enviar......();              
+            }       
 
         }
 

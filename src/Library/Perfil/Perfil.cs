@@ -6,7 +6,7 @@ namespace Library
         private long id;
         private int edad = -1;
         private TipoGenero genero;
-        private string relacion;
+        private TipoAfinidad relacion;
         private string interes;
         private int precioMin = -1;
         private int precioMax = -1;
@@ -26,7 +26,7 @@ namespace Library
             get => genero;
             set => genero = value;
         }
-        public string Relacion
+        public TipoAfinidad Relacion
         {
             get => relacion;
             set => relacion = value;

@@ -10,7 +10,7 @@ namespace Library
         {
             BibliotecaPerfiles.GetUsuario(idPerfil).Genero = genero;
         }
-        public static void SetRelacion (long idPerfil, string relacion)
+        public static void SetRelacion (long idPerfil, TipoAfinidad relacion)
         {
             BibliotecaPerfiles.GetUsuario(idPerfil).Relacion = relacion;
         }

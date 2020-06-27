@@ -27,6 +27,51 @@ namespace Library
             BandejaSalida.EnviarMensaje (mensaje);
 
         }
+        public static void PedirAclaracion (long id)
+        {
+            string respuesta = "Ups, no te entendí, puedes volver a respoder?";
+
+            MensajeSalida mensaje;
+
+            switch (id)
+            {
+                case 0:
+                    mensaje = new MensajeSalidaConsola (respuesta, id);
+                    break;
+
+                default:
+                    mensaje = new MensajeSalidaTelegram (respuesta, id);
+
+                    break;
+
+            }
+
+            BandejaSalida.EnviarMensaje (mensaje);
+
+        }
+
+           public static void ErrorApi (long id)
+        {
+            string respuesta = "Oh no!, Se cayó Mercado Libre! Maldito infeliz!";
+
+            MensajeSalida mensaje;
+
+            switch (id)
+            {
+                case 0:
+                    mensaje = new MensajeSalidaConsola (respuesta, id);
+                    break;
+
+                default:
+                    mensaje = new MensajeSalidaTelegram (respuesta, id);
+
+                    break;
+
+            }
+
+            BandejaSalida.EnviarMensaje (mensaje);
+
+        }
 
         public static void EnviaRegalo (string regalo, long id)
         {
@@ -82,24 +127,21 @@ namespace Library
         }
         public static string DefinirFrase (GeneradorPerfil perfil)
         {
-            return "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial";
-;
+            return "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial";;
         }
         public static string DefinirFrase (Busqueda busqueda)
         {
             return "Esta conforme con las Sugerencias?";
         }
 
-            public static string DefinirFrase (ControlPrecioMin precioMin)
+        public static string DefinirFrase (ControlPrecioMin precioMin)
         {
             return "Cual es el Precio Minimo que quieres Pagar?";
         }
-               public static string DefinirFrase (ControlPrecioMax precioMin)
+        public static string DefinirFrase (ControlPrecioMax precioMin)
         {
             return "Cual es el Precio Máximo que puedes pagar por este regalo?";
         }
-       
-         
 
     }
 }

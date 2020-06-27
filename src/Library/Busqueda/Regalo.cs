@@ -8,17 +8,17 @@ namespace Library
         private string url;
         private string urlImagen;
 
-        public string Nombre 
+        public string Nombre
         {
             get => nombre;
             set => nombre = value;
         }
-        public string Precio 
+        public string Precio
         {
             get => precio;
             set => precio = value;
         }
-        public string Moneda 
+        public string Moneda
         {
             get => moneda;
             set => moneda = value;
@@ -26,9 +26,14 @@ namespace Library
         public string Url
         {
             get => url;
-            set => url = value;
+            set
+            {
+                string[] link = value.Split ('#');
+                url = link[0];
+            }
         }
-        public string UrlImagen 
+
+        public string UrlImagen
         {
             get => urlImagen;
             set => urlImagen = value;
@@ -42,12 +47,12 @@ namespace Library
             this.url = link;
             this.urlImagen = linkImagen;
         }
-        public Regalo()
+        public Regalo ()
         {
-            
+
         }
-        
-        public override string ToString()
+
+        public override string ToString ()
         {
             return $"{nombre} -> {moneda} {precio} \n {url}";
         }

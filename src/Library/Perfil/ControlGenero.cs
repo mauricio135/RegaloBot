@@ -78,7 +78,7 @@ namespace Library
                     {
                         genero = TipoGenero.Masculino;
                     }
-                    else if (femenino.Contains (m.Contenido))
+                    else if (femenino.Contains (m.Contenido.ToLower()))
                     {
                         genero = TipoGenero.Femenino;
                     }
@@ -88,10 +88,6 @@ namespace Library
                     }
 
                     EditorPerfil.SetGenero (m.Id, genero);
-                    //Si está todo OK, paso al siguiente control
-                    Siguiente.Handle (m);
-                    //EditorPerfil.SetGenero (m.Id, m.Contenido);
-                    //Si está todo OK, paso al siguiente control
                     Siguiente.Handle (m);
                 }
             }

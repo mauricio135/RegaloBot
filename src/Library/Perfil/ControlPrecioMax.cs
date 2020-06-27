@@ -6,19 +6,19 @@ namespace Library
     /// Sexto eslabón del patrón Chain Of Responsibility. Se encarga de recibir el valor de la edad
     /// del Perfil que se crea, efectuando los controles necesarios para obtener un  parámetro válido.
     /// </summary>
-    public class ControlPrecioMax: BaseHandler
+    public class ControlPrecioMax : BaseHandler
     {
-        
-        public ControlPrecioMax()
+
+        public ControlPrecioMax ()
         {
-            var directorMl = new DirectorML();
-            var builder = new BusquedaBuilder();
+            var directorMl = new DirectorML ();
+            var builder = new BusquedaBuilder ();
             directorMl.TiendaBuilder = builder;
-            directorMl.BusquedaML();   
-            this.Siguiente = builder.GetBusqueda();
-            
+            directorMl.BusquedaML ();
+            this.Siguiente = builder.GetBusqueda ();
+
         }
-        
+
         /// <summary>
         /// Método que corresponde al patrón Chain of Responsibility.
         /// En caso de que el precio maximo correspondiente al perfil que envía el mensaje
@@ -36,37 +36,48 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle(Mensaje m)
+        public override void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario(m.Id).PrecioMax == -1)
+            if (BibliotecaPerfiles.GetUsuario (m.Id).PrecioMax == -1)
             {
-                if (!UsuariosPreguntados.Contains(m.Id))
+                if (!UsuariosPreguntados.Contains (m.Id))
                 {
-                    UsuariosPreguntados.Add(m.Id);
-                    Preguntar(m.Id);
+                    UsuariosPreguntados.Add (m.Id);
+                    Preguntar (m.Id);
                 }
                 else
                 {
-                    int precioMax = Int32.Parse(m.Contenido);
-                    EditorPerfil.SetPrecioMax(m.Id, precioMax);
-                    //Si está todo OK, paso al siguiente eslabón
-                    Siguiente.Handle(m);
+                    int precioMax;
+                    if (Int32.TryParse (m.Contenido, out precioMax))
+                    {
+                        EditorPerfil.SetPrecioMax (m.Id, precioMax);
+                        Siguiente.Handle (m);
+
+                    }
+                    else
+                    {
+                        
+                        Respuesta.PedirAclaracion (m.Id);
+                        Preguntar(m.Id);                    
+
+                    }
+
                 }
             }
             else
             {
-                Siguiente.Handle(m);
+                Siguiente.Handle (m);
             }
         }
         /// <summary>
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de Precio Maximo.
         /// </summary>
-         public override void Preguntar(long id)
+        public override void Preguntar (long id)
         {
-            string pregunta = Respuesta.DefinirFrase(this);
-            Respuesta.GenerarRespuesta(pregunta,id);
-            
+            string pregunta = Respuesta.DefinirFrase (this);
+            Respuesta.GenerarRespuesta (pregunta, id);
+
         }
 
     }
