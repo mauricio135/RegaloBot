@@ -16,7 +16,7 @@ namespace Library
         }
         public override string Filtrar(Perfil persona)
         {
-            if (persona.Edad > 30 && persona.Edad < 60 && persona.Genero == "Masculino")
+            if (persona.Edad > 30 && persona.Edad < 60 && persona.Genero == TipoGenero.Masculino)
             {
                 return "164461-herramientas";
             }
@@ -24,7 +24,7 @@ namespace Library
             {
                 return "436246-textiles_de_hogar_y_decoracion";
             }
-            else if (persona.Edad > 30 && persona.Edad < 60 && persona.Genero == "Femenino")
+            else if (persona.Edad > 30 && persona.Edad < 60 && persona.Genero == TipoGenero.Femenino)
             {
                 return "1621-jardin_y_exterior";
             }

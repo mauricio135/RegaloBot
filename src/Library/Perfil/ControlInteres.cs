@@ -46,7 +46,6 @@ namespace Library
                 }
                 else
                 {
-                    Console.WriteLine("Proceso Interes");
                     EditorPerfil.SetInteres(m.Id, m.Contenido);
                     Siguiente.Handle(m);
                 }

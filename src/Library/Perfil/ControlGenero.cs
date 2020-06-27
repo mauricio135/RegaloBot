@@ -6,15 +6,43 @@ namespace Library
     /// Segundo eslabón del patrón Chain Of Responsibility. Se encarga de recibir el género
     /// del Perfil que se crea, efectuando los controles necesarios para obtener un  parámetro válido.
     /// </summary>
-    public class ControlGenero: BaseHandler
+    public class ControlGenero : BaseHandler
     {
+
+        private static List<string> masculino = new List<string> ()
+        {
+            "hombre",
+            "masculino",
+            "m",
+            "masc",
+            "varon",
+            "varón",
+            "niño",
+            "nene",
+            "ombre",
+            "homvre",
+            "honvre",
+            "macho"
+        };
+
+        private static List<string> femenino = new List<string> ()
+        {
+            "mujer",
+            "femenino",
+            "f",
+            "fem",
+            "nena",
+            "gurisa",
+            "muger",
+            "femenina"
+        };
         /// <summary>
         /// Como ControlGenero contiene un objeto del tipo ControlRelacion (siguiente eslabón de COR), aplicamos
         /// patrón Creator para asignarle a ControlGenero la responsabilidad de crear objetos ControlRelacion.
         /// </summary>
-        public ControlGenero()
+        public ControlGenero ()
         {
-            this.Siguiente = new ControlRelacion();
+            this.Siguiente = new ControlRelacion ();
         }
 
         /// <summary>
@@ -34,40 +62,49 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle(Mensaje m)
+        public override void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario(m.Id).Genero == null)
+            if (BibliotecaPerfiles.GetUsuario (m.Id).Genero == TipoGenero.Vacio)
             {
-                if (!UsuariosPreguntados.Contains(m.Id))
+                if (!UsuariosPreguntados.Contains (m.Id))
                 {
-                    UsuariosPreguntados.Add(m.Id);
-                    Preguntar(m.Id);
+                    UsuariosPreguntados.Add (m.Id);
+                    Preguntar (m.Id);
                 }
                 else
                 {
-                    Console.WriteLine("Proceso Genero");
-                    EditorPerfil.SetGenero(m.Id, m.Contenido);
-                    //Si está todo OK, paso al siguiente control
-                    Siguiente.Handle(m);
+                    TipoGenero genero;
+                    if (masculino.Contains (m.Contenido))
+                    {
+                        genero = TipoGenero.Masculino;
+                    }
+                    else if (femenino.Contains (m.Contenido.ToLower()))
+                    {
+                        genero = TipoGenero.Femenino;
+                    }
+                    else
+                    {
+                        genero = TipoGenero.Indefinido;
+                    }
+
+                    EditorPerfil.SetGenero (m.Id, genero);
+                    Siguiente.Handle (m);
                 }
             }
             else
             {
-                Siguiente.Handle(m);
+                Siguiente.Handle (m);
             }
         }
         /// <summary>
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un tipo de género.
         /// </summary>
-             public override void Preguntar(long id)
+        public override void Preguntar (long id)
         {
-            string pregunta = Respuesta.DefinirFrase(this);
-            Respuesta.GenerarRespuesta(pregunta,id);
-            
+            string pregunta = Respuesta.DefinirFrase (this);
+            Respuesta.GenerarRespuesta (pregunta, id);
 
-            
-            
         }
 
     }

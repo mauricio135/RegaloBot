@@ -20,11 +20,11 @@ namespace Library
             {
                 return "1132-juegos_y_juguetes";
             }
-            else if (persona.Edad < 20 && persona.Genero == "Masculino")
+            else if (persona.Edad < 20 && persona.Genero == TipoGenero.Masculino)
             {
                 return "1144-consolas_y_videojuegos";
             }
-            else if (persona.Edad < 20 && persona.Genero == "Femenino")
+            else if (persona.Edad < 20 && persona.Genero == TipoGenero.Femenino)
             {
                 return "164597-articulos_escolares";
             }

@@ -1,10 +1,27 @@
 using System;
+using System.Collections.Generic;
 
 namespace Library
 {
     public class Respuesta
     {
 
+        private static List<string> confusion = new List<string> ()
+        {
+
+            "https://media.giphy.com/media/uN5iwZB2v2dH2/giphy.gif",
+            "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif",
+            "https://media.giphy.com/media/eChf44Gyj2VrO/giphy.gif",
+            "https://media.giphy.com/media/APqEbxBsVlkWSuFpth/giphy.gif",
+            "https://media.giphy.com/media/xx60sEpNkUBAk/giphy.gif",
+            "https://media.giphy.com/media/Vo6YaTLaSMGqI/giphy.gif",
+            "https://media.giphy.com/media/vsZF2hC9cH0Mo/giphy.gif",
+            "https://media.giphy.com/media/QE8hREXIgRXeo/giphy.gif",
+            "https://media.giphy.com/media/E2WEi5K1QzPxK/giphy.gif",
+            "https://media.giphy.com/media/xL7PDV9frcudO/giphy.gif",
+            "https://media.giphy.com/media/1X7lCRp8iE0yrdZvwd/giphy.gif"
+
+        };
         private static ILectorArchivos lectorArchivos;
         public static void GenerarRespuesta (string contenido, long id)
         {
@@ -27,7 +44,66 @@ namespace Library
             BandejaSalida.EnviarMensaje (mensaje);
 
         }
+        public static void PedirAclaracion (long id)
+        {
+            string respuesta = "Ups, no te entendí, puedes volver a respoder?";
 
+            MensajeSalida mensaje;
+
+            switch (id)
+            {
+                case 0:
+                    mensaje = new MensajeSalidaConsola (respuesta, id);
+                    break;
+
+                default:
+                    mensaje = new MensajeSalidaTelegram (respuesta, id);
+
+                    break;
+
+            }
+            string conf;
+            var random = new Random ();
+            int indice = random.Next (confusion.Count);
+            conf = confusion[indice];
+            BandejaSalida.EnviarGif (mensaje, conf);
+            BandejaSalida.EnviarMensaje (mensaje);
+
+        }
+
+        public static void ErrorApi (long id)
+        {
+            string respuesta = "Oh no!, Se cayó Mercado Libre! Maldito infeliz!";
+
+            MensajeSalida mensaje;
+
+            switch (id)
+            {
+                case 0:
+                    mensaje = new MensajeSalidaConsola (respuesta, id);
+                    break;
+
+                default:
+                    mensaje = new MensajeSalidaTelegram (respuesta, id);
+
+                    break;
+
+            }
+
+            BandejaSalida.EnviarMensaje (mensaje);
+
+        }
+        public static void EnviaGif (MensajeSalida mensaje, string urlGif)
+        {
+            //MensajeSalida mensaje;
+
+            if (mensaje.Id != 0)
+            {
+                BandejaSalida.EnviarGif (mensaje, urlGif);
+
+            }
+
+        }
         public static void EnviaRegalo (string regalo, long id)
         {
             MensajeSalida mensaje;
@@ -61,11 +137,11 @@ namespace Library
 
         public static string DefinirFrase (ControlEdad edad)
         {
-            return "Cuantos **años** tiene?";
+            return "Cuantos *años* tiene?";
         }
         public static string DefinirFrase (ControlGenero edad)
         {
-            return "Eres un **Hombre** o una **Mujer**?";
+            return "El regalo es para un *Hombre* o una *Mujer*?";
         }
         public static string DefinirFrase (BaseHandler defecto)
         {
@@ -74,19 +150,28 @@ namespace Library
 
         public static string DefinirFrase (ControlInteres interes)
         {
-            return "Cuales son tus **Intereses**?";
+            return "Cuales son sus *Intereses*? que le gusta?";
         }
         public static string DefinirFrase (ControlRelacion relacion)
         {
-            return "Cual es tu **relacion** con esta persona?";
+            return "Cual es tu *relación* con esta persona?";
         }
         public static string DefinirFrase (GeneradorPerfil perfil)
         {
-            return "Bienvenido! se ha creado un nuevo Perfil!";
+            return "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial.";;
         }
         public static string DefinirFrase (Busqueda busqueda)
         {
-            return "Esta conforme con las Sugerencias?";
+            return "Estas conforme con las Sugerencias?";
+        }
+
+        public static string DefinirFrase (ControlPrecioMin precioMin)
+        {
+            return "Cual es el *Precio Minimo* que quieres Pagar?";
+        }
+        public static string DefinirFrase (ControlPrecioMax precioMin)
+        {
+            return "Cual es el *Precio Máximo* que puedes pagar por este regalo?";
         }
 
     }

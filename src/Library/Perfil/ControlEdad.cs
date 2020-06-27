@@ -6,17 +6,17 @@ namespace Library
     /// Primer eslabón del patrón Chain Of Responsibility. Se encarga de recibir el valor de la edad
     /// del Perfil que se crea, efectuando los controles necesarios para obtener un  parámetro válido.
     /// </summary>
-    public class ControlEdad: BaseHandler
+    public class ControlEdad : BaseHandler
     {
         /// <summary>
         /// Como ControlEdad contiene un objeto del tipo ControlGenero (siguiente eslabón de COR), aplicamos
         /// patrón Creator para asignarle a ControlEdad la responsabilidad de crear objetos ControlGenero.
         /// </summary>
-        public ControlEdad()
+        public ControlEdad ()
         {
-            this.Siguiente = new ControlGenero();
+            this.Siguiente = new ControlGenero ();
         }
-        
+
         /// <summary>
         /// Método que corresponde al patrón Chain of Responsibility.
         /// En caso de que la Edad correspondiente al perfil que envía el mensaje
@@ -34,42 +34,50 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle(Mensaje m)
+        public override void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario(m.Id).Edad == -1)
+            if (BibliotecaPerfiles.GetUsuario (m.Id).Edad == -1)
             {
-                if (!UsuariosPreguntados.Contains(m.Id))
+                if (!UsuariosPreguntados.Contains (m.Id))
                 {
-                    UsuariosPreguntados.Add(m.Id);
-                    Preguntar(m.Id);
+                    UsuariosPreguntados.Add (m.Id);
+                    Preguntar (m.Id);
                 }
                 else
                 {
-                    Console.WriteLine("Proceso edad");
-                    int edad = Int32.Parse(m.Contenido);
-                    EditorPerfil.SetEdad(m.Id, edad);
-                    //Si está todo OK, paso al siguiente eslabón
-                    Siguiente.Handle(m);
+                    int edad;
+
+                    if (Int32.TryParse (m.Contenido, out edad))
+                    {
+                        EditorPerfil.SetEdad (m.Id, edad);
+                        //Si está todo OK, paso al siguiente eslabón
+                        Siguiente.Handle (m);
+
+                    }
+                    else
+                    {
+                        Respuesta.PedirAclaracion (m.Id);
+                        Preguntar(m.Id);
+
+                    }
+
                 }
             }
             else
             {
-                Siguiente.Handle(m);
+                Siguiente.Handle (m);
             }
         }
         /// <summary>
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de Edad.
         /// </summary>
-         public override void Preguntar(long id)
+        public override void Preguntar (long id)
         {
-            string pregunta = Respuesta.DefinirFrase(this);
-            Respuesta.GenerarRespuesta(pregunta,id);
+            string pregunta = Respuesta.DefinirFrase (this);
+            Respuesta.GenerarRespuesta (pregunta, id);
 
-            
-            
         }
-
 
     }
 }

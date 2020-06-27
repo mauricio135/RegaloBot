@@ -6,17 +6,17 @@ namespace Library
     /// Quinto eslabón del patrón Chain Of Responsibility. Se encarga de recibir el valor del Precio Minimo
     /// del Perfil que se crea, efectuando los controles necesarios para obtener un  parámetro válido.
     /// </summary>
-    public class ControlPrecioMin: BaseHandler
+    public class ControlPrecioMin : BaseHandler
     {
         /// <summary>
         /// Como ControlPrecioMin contiene un objeto del tipo ControlPrecioMax (siguiente eslabón de COR), aplicamos
         /// patrón Creator para asignarle a ControlPrecioMin la responsabilidad de crear objetos ControlPrecioMax.
         /// </summary>
-        public ControlPrecioMin()
+        public ControlPrecioMin ()
         {
-            this.Siguiente = new ControlPrecioMax();
+            this.Siguiente = new ControlPrecioMax ();
         }
-        
+
         /// <summary>
         /// Método que corresponde al patrón Chain of Responsibility.
         /// En caso de que el precio minimo correspondiente al perfil que envía el mensaje
@@ -34,39 +34,49 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle(Mensaje m)
+        public override void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario(m.Id).PrecioMin == -1)
+            if (BibliotecaPerfiles.GetUsuario (m.Id).PrecioMin == -1)
             {
-                if (!UsuariosPreguntados.Contains(m.Id))
+                if (!UsuariosPreguntados.Contains (m.Id))
                 {
-                    UsuariosPreguntados.Add(m.Id);
-                    Preguntar(m.Id);
+                    UsuariosPreguntados.Add (m.Id);
+                    Preguntar (m.Id);
                 }
                 else
                 {
-                    Console.WriteLine("Proceso Precio Minimo");
-                    int precioMin = Int32.Parse(m.Contenido);
-                    EditorPerfil.SetPrecioMin(m.Id, precioMin);
-                    //Si está todo OK, paso al siguiente eslabón
-                    Siguiente.Handle(m);
+                    int precioMin;
+                    if (Int32.TryParse (m.Contenido, out precioMin))
+                        {
+                            EditorPerfil.SetPrecioMin (m.Id, precioMin);
+                            Siguiente.Handle (m);
+
+                        }
+                        else
+                        {
+                            Respuesta.PedirAclaracion(m.Id);
+                            Preguntar(m.Id);
+
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    Siguiente.Handle (m);
                 }
             }
-            else
+            /// <summary>
+            /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
+            /// pedido por un valor de PrecioMin.
+            /// </summary>
+            public override void Preguntar (long id)
             {
-                Siguiente.Handle(m);
-            }
-        }
-        /// <summary>
-        /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
-        /// pedido por un valor de PrecioMin.
-        /// </summary>
-         public override void Preguntar(long id)
-        {
-            string pregunta = Respuesta.DefinirFrase(this);
-            Respuesta.GenerarRespuesta(pregunta,id);
-            
-        }
+                string pregunta = Respuesta.DefinirFrase (this);
+                Respuesta.GenerarRespuesta (pregunta, id);
 
+            }
+
+        }
     }
-}

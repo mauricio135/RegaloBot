@@ -5,8 +5,8 @@ namespace Library
         //Identificador único de cada conversación, vincula al objeto Perfil con la conversación en la que se originó
         private long id;
         private int edad = -1;
-        private string genero;
-        private string relacion;
+        private TipoGenero genero;
+        private TipoAfinidad relacion;
         private string interes;
         private int precioMin = -1;
         private int precioMax = -1;
@@ -21,12 +21,12 @@ namespace Library
             set => edad = value;
         }
 
-        public string Genero
+        public TipoGenero Genero
         {
             get => genero;
             set => genero = value;
         }
-        public string Relacion
+        public TipoAfinidad Relacion
         {
             get => relacion;
             set => relacion = value;

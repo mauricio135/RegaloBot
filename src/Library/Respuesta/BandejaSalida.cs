@@ -5,27 +5,21 @@ namespace Library
 {
     public class BandejaSalida
     {
-        public static void EnviarMensaje (MensajeSalida mensaje)
+        public static async void EnviarMensaje (MensajeSalida mensaje)
         {
             mensaje.EnviarTexto ();
 
+           
+        }
+        public static  void EnviarGif (MensajeSalida mensaje ,string UrlGif)
+        {           
             if (mensaje.Id != 0)
             {
-
                 MensajeSalidaTelegram men;
                 men = (MensajeSalidaTelegram) mensaje;
-
-                if (men.Imagen != null)
-                {
-                 //   mensaje.EnviarImagen (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
-
-                }
+                men.EnviarGif (UrlGif);
 
             }
-            // 
-
-            // } 
-            //  mensaje.Enviar......();              
 
         }
 
