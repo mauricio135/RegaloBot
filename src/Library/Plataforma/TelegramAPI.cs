@@ -89,8 +89,15 @@ namespace Telegram.Bot.Examples.Echo
 
         public static async void Contestar (long id, string respuesta)
         {
-            await Bot.SendTextMessageAsync (id, respuesta);
+            await Bot.SendTextMessageAsync (id, respuesta ,ParseMode.Markdown);
       
+        }
+         public static async Task EnviarGif (long id, string gif)
+        {
+           // await Bot.SendVideoAsync (id, gif);
+             await Bot.SendAnimationAsync (id, gif);
+
+
         }
 
         public static async Task EnviarFoto (long id, string ruta)

@@ -8,7 +8,7 @@ namespace Library
 
         public MensajeSalidaTelegram (string cont, long num) : base (cont, num)
         {
-            
+
         }
 
         public string Imagen
@@ -20,10 +20,15 @@ namespace Library
         {
             TelegramAPI.Contestar (this.Id, this.Contenido);
         }
-         public override  async void EnviarImagen (string url) 
+        public override async void EnviarImagen (string url)
         {
-            
-            await TelegramAPI.EnviarFoto (this.Id,url);
+
+            await TelegramAPI.EnviarFoto (this.Id, url);
+        }
+        public async void EnviarGif (string url)
+        {
+
+            await TelegramAPI.EnviarGif (this.Id, url);
         }
 
     }
