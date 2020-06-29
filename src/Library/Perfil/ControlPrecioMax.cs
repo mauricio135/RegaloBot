@@ -47,18 +47,26 @@ namespace Library
                 }
                 else
                 {
-                    int precioMax;
-                    if (Int32.TryParse (m.Contenido, out precioMax))
+                     /// <summary>
+                    /// Intento parsear el contenido del mensaje a un numero entero, si lo consigue pasa al siguiente eslabón.
+                    /// </summary>
+                    
+                    try 
                     {
-                        EditorPerfil.SetPrecioMax (m.Id, precioMax);
+                        int precioMax = Int32.Parse(m.Contenido);
+                        EditorPerfil.SetEdad (m.Id, precioMax);
+                        //Si está todo OK, paso al siguiente eslabón
                         Siguiente.Handle (m);
 
                     }
-                    else
+                    /// <summary>
+                    /// Si el parseo falla, por ejemplo si recibo una letra, captura la excepción y envia un mensaje al usuario
+                    /// pidiendo que ingrese un valor valido de edad
+                    /// </summary>
+                    catch(FormatException)
                     {
-                        
                         Respuesta.PedirAclaracion (m.Id);
-                        Preguntar(m.Id);                    
+                        Preguntar (m.Id);;
 
                     }
 
