@@ -10,6 +10,8 @@ namespace Library
     {
         public void GuardarImagen (string imageUrl)
         {
+            if (imageUrl == null) 
+            throw new ArgumentNullException("La Url de la imagen no puede ser vacia");
 
             using (WebClient client = new WebClient ())
             {
