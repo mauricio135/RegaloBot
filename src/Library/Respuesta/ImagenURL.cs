@@ -10,9 +10,12 @@ namespace Library
     {
         public void GuardarImagen (string imageUrl)
         {
-            if (imageUrl == null) 
-            throw new ArgumentNullException("La Url de la imagen no puede ser vacia");
-
+            if (imageUrl == null)
+            {
+                throw new ArgumentNullException("La Url de la imagen no puede ser vacia");
+            }
+            else
+            {    
             using (WebClient client = new WebClient ())
             {
                // client.DownloadFile (new Uri (url), @"c:\temp\image35.png");
@@ -20,7 +23,7 @@ namespace Library
                 client.DownloadFileAsync (new Uri (imageUrl), @"c:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
             }
             // Task.CompletedTask;
-          
+            }
 
         }
     }
