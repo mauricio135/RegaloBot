@@ -130,6 +130,20 @@ namespace Library
 
         }
 
+        public static void ErrorEdad(long id)
+        {
+            GenerarRespuesta("La edad debe ser un número entre 0 y 120", id);
+        }
+
+        public static void ErrorPrecio(long id)
+        {
+            GenerarRespuesta("El precio debe ser un valor positivo", id);
+        }
+        public static void ErrorPrecioMax(long id)
+        {
+            GenerarRespuesta("El precio máximo debe ser un valor positivo y no puede ser menor al mínimo", id);
+        }
+
         public static string BuscarFrase (string archivo)
         {
             return archivo;

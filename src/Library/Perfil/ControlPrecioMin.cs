@@ -52,7 +52,7 @@ namespace Library
                     try 
                     {
                         int precioMin = Int32.Parse(m.Contenido);
-                        EditorPerfil.SetEdad (m.Id, precioMin);
+                        EditorPerfil.SetPrecioMin (m.Id, precioMin);
                         //Si está todo OK, paso al siguiente eslabón
                         Siguiente.Handle (m);
 
@@ -64,8 +64,18 @@ namespace Library
                     catch(FormatException)
                     {
                         Respuesta.PedirAclaracion (m.Id);
-                        Preguntar (m.Id);;
+                        Preguntar (m.Id);
 
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Respuesta.PedirAclaracion (m.Id);
+                        Preguntar (m.Id);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Respuesta.ErrorPrecio(m.Id);
+                        Preguntar (m.Id);
                     }
                 }
             }

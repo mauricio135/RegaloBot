@@ -123,6 +123,11 @@ namespace Library
                         Preguntar (m.Id);
 
                     }
+                    catch (NullReferenceException)
+                    {
+                        Respuesta.PedirAclaracion (m.Id);
+                        Preguntar (m.Id);
+                    }
 
                 }
             }

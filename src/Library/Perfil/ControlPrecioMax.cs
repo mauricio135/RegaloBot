@@ -54,7 +54,7 @@ namespace Library
                     try 
                     {
                         int precioMax = Int32.Parse(m.Contenido);
-                        EditorPerfil.SetEdad (m.Id, precioMax);
+                        EditorPerfil.SetPrecioMax (m.Id, precioMax);
                         //Si está todo OK, paso al siguiente eslabón
                         Siguiente.Handle (m);
 
@@ -66,9 +66,19 @@ namespace Library
                     catch(FormatException)
                     {
                         Respuesta.PedirAclaracion (m.Id);
-                        Preguntar (m.Id);;
-
+                        Preguntar (m.Id);
                     }
+                    catch (NullReferenceException)
+                    {
+                        Respuesta.PedirAclaracion (m.Id);
+                        Preguntar (m.Id);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Respuesta.ErrorPrecioMax(m.Id);
+                        Preguntar(m.Id);
+                    }
+
 
                 }
             }

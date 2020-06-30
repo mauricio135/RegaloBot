@@ -49,11 +49,13 @@ namespace Library
 
         public void BuscarRegalo (long idPerfil)
         {
+            int precioMin = BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMin;
+            int precioMax = BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMax;
             for (int i = 0; i < 3; i++)
             {
                 string regaloSugerido = generadorRegalo.SugerenciaRegalo(idPerfil);
                 List<Regalo> regalos = tienda.BuscarRegalo(regaloSugerido);
-                List<Regalo> resultados = this.procesadorSugerencias.ProcesarRegalos(regalos);
+                List<Regalo> resultados = this.procesadorSugerencias.ProcesarRegalos(regalos, precioMin, precioMax);
                 foreach (Regalo resultado in resultados)
                 {
                     ImpresoraRegalo.EnviarRegalo(resultado, idPerfil);
