@@ -127,8 +127,10 @@ namespace Library
                     }
                     catch (NullReferenceException)
                     {
+
                         await Respuesta.PedirAclaracion (m.Id);
                         await Preguntar (m.Id);
+
                     }
 
                 }

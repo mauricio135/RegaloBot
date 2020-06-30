@@ -1,14 +1,21 @@
-namespace Library.Test
+
+using Library;
+namespace Library.Test.Perfil
 {
-    public class ControlEdadStub : ControlEdad
+    internal class ControlEdadStub: ControlEdad
     {
-        public ControlEdadStub ()
-        { }
-
-        public void SetBiblioteca (int id)
+        public bool passed = false;
+        public ControlEdadStub()
         {
-          //  BibliotecaPerfiles.
-
+            this.Siguiente = new HandlerStub(SetPassed);
+        }
+        public void SetPreguntados(long id)
+        {
+            this.UsuariosPreguntados.Add(id);
+        }
+        public void SetPassed()
+        {
+            this.passed = true;
         }
 
     }

@@ -92,6 +92,7 @@ namespace Telegram.Bot.Examples.Echo
 
         public static async Task Contestar (long id, string respuesta)
         {
+
             await Bot.SendTextMessageAsync (id, respuesta, ParseMode.Default);
 
         }
@@ -117,6 +118,7 @@ namespace Telegram.Bot.Examples.Echo
             }
             );
           */
+
 
         }
 

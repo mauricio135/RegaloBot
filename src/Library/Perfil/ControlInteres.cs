@@ -48,8 +48,16 @@ namespace Library
                 }
                 else
                 {
+                    try
+                    {
                     EditorPerfil.SetInteres(m.Id, m.Contenido);
                     Siguiente.Handle(m);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Respuesta.PedirAclaracion (m.Id);
+                        Preguntar (m.Id);
+                    }
                 }
             }
             else
