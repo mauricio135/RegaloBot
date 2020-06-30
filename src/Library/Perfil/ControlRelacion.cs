@@ -121,9 +121,14 @@ namespace Library
                     }
                     catch (ArgumentException)
                     {
-                       await Respuesta.PedirAclaracion (m.Id);
-                       await  Preguntar (m.Id);
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);
 
+                    }
+                    catch (NullReferenceException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);
                     }
 
                 }

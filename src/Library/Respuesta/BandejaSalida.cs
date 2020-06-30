@@ -6,6 +6,11 @@ namespace Library
 {
     public class BandejaSalida
     {
+        /// <summary>
+        /// Clase encargada de enviar los diferente tipos de mensajes a las plataformas.
+        /// </summary>
+        /// <param name="mensaje"></param>
+        /// <returns></returns>
         public static async Task EnviarMensaje (MensajeSalida mensaje)
         {
            await mensaje.EnviarTexto ();

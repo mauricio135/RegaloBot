@@ -36,7 +36,7 @@ namespace Library
         {
             try
             {                
-            this.BuscarRegalo(m.Id);            
+            await this.BuscarRegalo(m.Id);            
             await this.Preguntar(m.Id);
             }   
             catch (NullReferenceException)
@@ -47,7 +47,7 @@ namespace Library
         }
     
 
-        public void BuscarRegalo (long idPerfil)
+        public async Task BuscarRegalo (long idPerfil)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -56,7 +56,7 @@ namespace Library
                 List<Regalo> resultados = this.procesadorSugerencias.ProcesarRegalos(regalos);
                 foreach (Regalo resultado in resultados)
                 {
-                    ImpresoraRegalo.EnviarRegalo(resultado, idPerfil);
+                    await ImpresoraRegalo.EnviarRegalo(resultado, idPerfil);
                 } 
             }
             

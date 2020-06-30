@@ -22,7 +22,7 @@ namespace Library
             await TelegramAPI.Contestar (this.Id, this.Contenido);
           //  await TelegramAPI.Contestar2 (this.Id, this.Contenido);            
             
-           // await TelegramAPI.SendInlineKeyboard(this.Id);
+          //  await TelegramAPI.SendInlineKeyboard(this.Id);
             
         }
         public override async Task EnviarImagen (string url)

@@ -105,7 +105,7 @@ namespace Library
             }
 
         }
-        public static async void EnviaRegalo (string regalo, long id)
+        public static async Task EnviaRegalo (string regalo, long id)
         {
             MensajeSalida mensaje;
 
@@ -126,6 +126,8 @@ namespace Library
                     break;
 
             }
+          
+
 
            await BandejaSalida.EnviarMensaje (mensaje);
 
@@ -138,11 +140,11 @@ namespace Library
 
         public static string DefinirFrase (ControlEdad edad)
         {
-            return "Cuantos *años* tiene?";
+            return "Cuantos años tiene?";
         }
         public static string DefinirFrase (ControlGenero edad)
         {
-            return "El regalo es para un *Hombre* o una *Mujer*?";
+            return "El regalo es para un Hombre o una Mujer?";
         }
         public static string DefinirFrase (BaseHandler defecto)
         {
@@ -151,11 +153,11 @@ namespace Library
 
         public static string DefinirFrase (ControlInteres interes)
         {
-            return "Cuales son sus *Intereses*? que le gusta?";
+            return "Cuales son sus Intereses? que le gusta?";
         }
         public static string DefinirFrase (ControlRelacion relacion)
         {
-            return "Cual es tu *relación* con esta persona?";
+            return "Cual es tu relación con esta persona?";
         }
         public static string DefinirFrase (GeneradorPerfil perfil)
         {
@@ -168,11 +170,11 @@ namespace Library
 
         public static string DefinirFrase (ControlPrecioMin precioMin)
         {
-            return "Cual es el *Precio Minimo* que quieres Pagar?";
+            return "Cual es el Precio Minimo que quieres Pagar?";
         }
         public static string DefinirFrase (ControlPrecioMax precioMin)
         {
-            return "Cual es el *Precio Máximo* que puedes pagar por este regalo?";
+            return "Cual es el Precio Máximo que puedes pagar por este regalo?";
         }
 
     }

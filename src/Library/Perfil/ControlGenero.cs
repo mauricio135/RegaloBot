@@ -76,6 +76,8 @@ namespace Library
                 }
                 else
                 {
+                    try
+                    {
                     TipoGenero genero;
                     if (masculino.Contains (m.Contenido))
                     {
@@ -92,6 +94,12 @@ namespace Library
 
                     EditorPerfil.SetGenero (m.Id, genero);
                     Siguiente.Handle (m);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);;
+                    }
                 }
             }
             else

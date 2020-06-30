@@ -62,6 +62,7 @@ namespace Telegram.Bot.Examples.Echo
             }
             catch (Exception e)
             {
+                    Console.WriteLine("error : no mensaje");
                 await HandleErrorAsync (e, cancellationToken);
             }
         }
@@ -91,7 +92,7 @@ namespace Telegram.Bot.Examples.Echo
 
         public static async Task Contestar (long id, string respuesta)
         {
-            await Bot.SendTextMessageAsync (id, respuesta, ParseMode.Markdown);
+            await Bot.SendTextMessageAsync (id, respuesta, ParseMode.Default);
 
         }
         public static async Task Contestar2 (long id, string respuesta)
@@ -122,7 +123,7 @@ namespace Telegram.Bot.Examples.Echo
 
          public  static async Task SendInlineKeyboard(long id )
             {
-               // await Bot.SendChatActionAsync(id, ChatAction.Typing);
+                await Bot.SendChatActionAsync(id, ChatAction.Typing);
 
                 // Simulate longer running task
                 await Task.Delay(500);
