@@ -74,13 +74,13 @@ namespace Library
                     }
                     catch (NullReferenceException)
                     {
-                        Respuesta.PedirAclaracion (m.Id);
-                        Preguntar (m.Id);
+                        await Respuesta.PedirAclaracion (m.Id);
+                       await Preguntar (m.Id);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        Respuesta.ErrorPrecio(m.Id);
-                        Preguntar (m.Id);
+                       await Respuesta.ErrorPrecio(m.Id);
+                       await Preguntar (m.Id);
                     }
                 }
             }
@@ -90,11 +90,7 @@ namespace Library
                     Siguiente.Handle (m);
 
                 }
-            }
-            else
-            {
-                Siguiente.Handle (m);
-            }
+           
         }
         /// <summary>
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el

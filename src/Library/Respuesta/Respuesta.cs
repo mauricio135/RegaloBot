@@ -24,7 +24,7 @@ namespace Library
 
         };
         private static ILectorArchivos lectorArchivos;
-        public static  async Task GenerarRespuesta (string contenido, long id)
+        public static async Task GenerarRespuesta (string contenido, long id)
         {
             //string cont = BuscarFrase (archivo);
             MensajeSalida mensaje;
@@ -42,10 +42,10 @@ namespace Library
 
             }
 
-           await BandejaSalida.EnviarMensaje (mensaje);
+            await BandejaSalida.EnviarMensaje (mensaje);
 
         }
-        public static async  Task PedirAclaracion (long id)
+        public static async Task PedirAclaracion (long id)
         {
             string respuesta = "Ups, no te entendí, puedes volver a respoder?";
 
@@ -67,9 +67,8 @@ namespace Library
             var random = new Random ();
             int indice = random.Next (confusion.Count);
             conf = confusion[indice];
-           await BandejaSalida.EnviarGif (mensaje, conf);
-           await BandejaSalida.EnviarMensaje (mensaje);
-           
+            await BandejaSalida.EnviarGif (mensaje, conf);
+            await BandejaSalida.EnviarMensaje (mensaje);
 
         }
 
@@ -92,7 +91,7 @@ namespace Library
 
             }
 
-           await BandejaSalida.EnviarMensaje (mensaje);
+            await BandejaSalida.EnviarMensaje (mensaje);
 
         }
         public static async void EnviaGif (MensajeSalida mensaje, string urlGif)
@@ -100,7 +99,7 @@ namespace Library
 
             if (mensaje.Id != 0)
             {
-               await BandejaSalida.EnviarGif (mensaje, urlGif);
+                await BandejaSalida.EnviarGif (mensaje, urlGif);
 
             }
 
@@ -118,33 +117,31 @@ namespace Library
                 default:
                     mensaje = new MensajeSalidaTelegram (regalo, id);
                     ImagenURL imagen = new ImagenURL ();
-                 //   imagen.GuardarImagen ("https://http2.mlstatic.com/D_NQ_NP_742328-MLU33039077458_112019-V.webp");
+                    //   imagen.GuardarImagen ("https://http2.mlstatic.com/D_NQ_NP_742328-MLU33039077458_112019-V.webp");
 
-                 //   MensajeSalidaTelegram men = (MensajeSalidaTelegram) mensaje;
-                //    men.Imagen = (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
+                    //   MensajeSalidaTelegram men = (MensajeSalidaTelegram) mensaje;
+                    //    men.Imagen = (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
 
                     break;
 
             }
-          
 
-
-           await BandejaSalida.EnviarMensaje (mensaje);
+            await BandejaSalida.EnviarMensaje (mensaje);
 
         }
 
-        public static void ErrorEdad(long id)
+        public static async Task ErrorEdad (long id)
         {
-            GenerarRespuesta("La edad debe ser un número entre 0 y 120", id);
+            await GenerarRespuesta ("La edad debe ser un número entre 0 y 120", id);
         }
 
-        public static void ErrorPrecio(long id)
+        public static async Task ErrorPrecio (long id)
         {
-            GenerarRespuesta("El precio debe ser un valor positivo", id);
+            await GenerarRespuesta ("El precio debe ser un valor positivo", id);
         }
-        public static void ErrorPrecioMax(long id)
+        public static async Task ErrorPrecioMax (long id)
         {
-            GenerarRespuesta("El precio máximo debe ser un valor positivo y no puede ser menor al mínimo", id);
+            await GenerarRespuesta ("El precio máximo debe ser un valor positivo y no puede ser menor al mínimo", id);
         }
 
         public static string BuscarFrase (string archivo)
