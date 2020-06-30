@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Library
 {
@@ -23,7 +24,7 @@ namespace Library
 
         };
         private static ILectorArchivos lectorArchivos;
-        public static void GenerarRespuesta (string contenido, long id)
+        public static  async Task GenerarRespuesta (string contenido, long id)
         {
             //string cont = BuscarFrase (archivo);
             MensajeSalida mensaje;
@@ -41,10 +42,10 @@ namespace Library
 
             }
 
-            BandejaSalida.EnviarMensaje (mensaje);
+           await BandejaSalida.EnviarMensaje (mensaje);
 
         }
-        public static void PedirAclaracion (long id)
+        public static async  Task PedirAclaracion (long id)
         {
             string respuesta = "Ups, no te entendí, puedes volver a respoder?";
 
@@ -66,14 +67,15 @@ namespace Library
             var random = new Random ();
             int indice = random.Next (confusion.Count);
             conf = confusion[indice];
-            BandejaSalida.EnviarGif (mensaje, conf);
-            BandejaSalida.EnviarMensaje (mensaje);
+           await BandejaSalida.EnviarGif (mensaje, conf);
+           await BandejaSalida.EnviarMensaje (mensaje);
+           
 
         }
 
-        public static void ErrorApi (long id)
+        public static async void ErrorApi (long id)
         {
-            string respuesta = "Oh no!, Se cayó Mercado Libre! Maldito infeliz!";
+            string respuesta = "Oh no!, Se cayó Mercado Libre!";
 
             MensajeSalida mensaje;
 
@@ -90,21 +92,20 @@ namespace Library
 
             }
 
-            BandejaSalida.EnviarMensaje (mensaje);
+           await BandejaSalida.EnviarMensaje (mensaje);
 
         }
-        public static void EnviaGif (MensajeSalida mensaje, string urlGif)
+        public static async void EnviaGif (MensajeSalida mensaje, string urlGif)
         {
-            //MensajeSalida mensaje;
 
             if (mensaje.Id != 0)
             {
-                BandejaSalida.EnviarGif (mensaje, urlGif);
+               await BandejaSalida.EnviarGif (mensaje, urlGif);
 
             }
 
         }
-        public static void EnviaRegalo (string regalo, long id)
+        public static async Task EnviaRegalo (string regalo, long id)
         {
             MensajeSalida mensaje;
 
@@ -117,16 +118,18 @@ namespace Library
                 default:
                     mensaje = new MensajeSalidaTelegram (regalo, id);
                     ImagenURL imagen = new ImagenURL ();
-                    imagen.GuardarImagen ("https://http2.mlstatic.com/D_NQ_NP_742328-MLU33039077458_112019-V.webp");
+                 //   imagen.GuardarImagen ("https://http2.mlstatic.com/D_NQ_NP_742328-MLU33039077458_112019-V.webp");
 
-                    MensajeSalidaTelegram men = (MensajeSalidaTelegram) mensaje;
-                    men.Imagen = (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
+                 //   MensajeSalidaTelegram men = (MensajeSalidaTelegram) mensaje;
+                //    men.Imagen = (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
 
                     break;
 
             }
+          
 
-            BandejaSalida.EnviarMensaje (mensaje);
+
+           await BandejaSalida.EnviarMensaje (mensaje);
 
         }
 
@@ -151,11 +154,11 @@ namespace Library
 
         public static string DefinirFrase (ControlEdad edad)
         {
-            return "Cuantos *años* tiene?";
+            return "Cuantos años tiene?";
         }
         public static string DefinirFrase (ControlGenero edad)
         {
-            return "El regalo es para un *Hombre* o una *Mujer*?";
+            return "El regalo es para un Hombre o una Mujer?";
         }
         public static string DefinirFrase (BaseHandler defecto)
         {
@@ -164,11 +167,11 @@ namespace Library
 
         public static string DefinirFrase (ControlInteres interes)
         {
-            return "Cuales son sus *Intereses*? que le gusta?";
+            return "Cuales son sus Intereses? que le gusta?";
         }
         public static string DefinirFrase (ControlRelacion relacion)
         {
-            return "Cual es tu *relación* con esta persona?";
+            return "Cual es tu relación con esta persona?";
         }
         public static string DefinirFrase (GeneradorPerfil perfil)
         {
@@ -181,11 +184,11 @@ namespace Library
 
         public static string DefinirFrase (ControlPrecioMin precioMin)
         {
-            return "Cual es el *Precio Minimo* que quieres Pagar?";
+            return "Cual es el Precio Minimo que quieres Pagar?";
         }
         public static string DefinirFrase (ControlPrecioMax precioMin)
         {
-            return "Cual es el *Precio Máximo* que puedes pagar por este regalo?";
+            return "Cual es el Precio Máximo que puedes pagar por este regalo?";
         }
 
     }
