@@ -47,19 +47,35 @@ namespace Library
                 }
                 else
                 {
-                    int precioMin;
-                    if (Int32.TryParse (m.Contenido, out precioMin))
+
+                     /// <summary>
+                    /// Intento parsear el contenido del mensaje a un numero entero, si lo consigue pasa al siguiente eslabón.
+                    /// </summary>
+                    
+                    try 
                     {
-                        EditorPerfil.SetPrecioMin (m.Id, precioMin);
+                        int precioMin = Int32.Parse(m.Contenido);
+                        EditorPerfil.SetEdad (m.Id, precioMin);
+                        //Si está todo OK, paso al siguiente eslabón
                         Siguiente.Handle (m);
 
                     }
-                    else
+                    /// <summary>
+                    /// Si el parseo falla, por ejemplo si recibo una letra, captura la excepción y envia un mensaje al usuario
+                    /// pidiendo que ingrese un valor valido de edad
+                    /// </summary>
+                    catch(FormatException)
                     {
-                       await Respuesta.PedirAclaracion (m.Id);
-                       await Preguntar (m.Id);
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);;
 
                     }
+                }
+            }
+
+            else
+                {
+                    Siguiente.Handle (m);
 
                 }
             }

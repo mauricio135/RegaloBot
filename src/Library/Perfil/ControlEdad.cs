@@ -47,20 +47,30 @@ namespace Library
                 }
                 else
                 {
-                    int edad;
-
-                    if (Int32.TryParse (m.Contenido, out edad))
+                    /// <summary>
+                    /// Intento parsear el contenido del mensaje a un numero entero, si lo consigue pasa al siguiente eslabón.
+                    /// </summary>
+                    
+                    try 
                     {
+                        int edad = Int32.Parse(m.Contenido);
                         EditorPerfil.SetEdad (m.Id, edad);
                         Siguiente.Handle (m);
 
                     }
-                    else
+                    /// <summary>
+                    /// Si el parseo falla, por ejemplo si recibo una letra, captura la excepción y envia un mensaje al usuario
+                    /// pidiendo que ingrese un valor valido de edad
+                    /// </summary>
+                    catch(FormatException)
                     {
+
                        await  Respuesta.PedirAclaracion (m.Id);
                        await  Preguntar(m.Id);
 
+
                     }
+                    
 
                 }
             }
