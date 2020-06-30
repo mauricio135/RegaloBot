@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Telegram.Bot.Examples.Echo;
+
 namespace Library
 {
     /// <summary>
@@ -62,17 +65,19 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle (Mensaje m)
+        public override async void Handle (Mensaje m)
         {
             if (BibliotecaPerfiles.GetUsuario (m.Id).Genero == TipoGenero.Vacio)
             {
                 if (!UsuariosPreguntados.Contains (m.Id))
                 {
                     UsuariosPreguntados.Add (m.Id);
-                    Preguntar (m.Id);
+                   await Preguntar (m.Id);
                 }
                 else
                 {
+                    try
+                    {
                     TipoGenero genero;
                     if (masculino.Contains (m.Contenido))
                     {
@@ -89,6 +94,12 @@ namespace Library
 
                     EditorPerfil.SetGenero (m.Id, genero);
                     Siguiente.Handle (m);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);;
+                    }
                 }
             }
             else
@@ -100,10 +111,12 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un tipo de género.
         /// </summary>
-        public override void Preguntar (long id)
+        public override async Task Preguntar (long id)
         {
-            string pregunta = Respuesta.DefinirFrase (this);
-            Respuesta.GenerarRespuesta (pregunta, id);
+            
+            string pregunta = Respuesta.DefinirFrase (this);  
+            await Respuesta.GenerarRespuesta (pregunta, id);                      
+            await TelegramAPI.SendReplyKeyboard(id);
 
         }
 

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Library
 {
     /// <summary>
@@ -34,17 +36,18 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle (Mensaje m)
+        public override async void Handle (Mensaje m)
         {
             if (BibliotecaPerfiles.GetUsuario (m.Id).PrecioMin == -1)
             {
                 if (!UsuariosPreguntados.Contains (m.Id))
                 {
                     UsuariosPreguntados.Add (m.Id);
-                    Preguntar (m.Id);
+                   await Preguntar (m.Id);
                 }
                 else
                 {
+
                      /// <summary>
                     /// Intento parsear el contenido del mensaje a un numero entero, si lo consigue pasa al siguiente eslabón.
                     /// </summary>
@@ -63,8 +66,8 @@ namespace Library
                     /// </summary>
                     catch(FormatException)
                     {
-                        Respuesta.PedirAclaracion (m.Id);
-                        Preguntar (m.Id);;
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);;
 
                     }
                 }
@@ -73,18 +76,24 @@ namespace Library
             else
                 {
                     Siguiente.Handle (m);
+
                 }
             }
-            /// <summary>
-            /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
-            /// pedido por un valor de PrecioMin.
-            /// </summary>
-            public override void Preguntar (long id)
+            else
             {
-                string pregunta = Respuesta.DefinirFrase (this);
-                Respuesta.GenerarRespuesta (pregunta, id);
-
+                Siguiente.Handle (m);
             }
+        }
+        /// <summary>
+        /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
+        /// pedido por un valor de PrecioMin.
+        /// </summary>
+        public override async Task Preguntar (long id)
+        {
+            string pregunta = Respuesta.DefinirFrase (this);
+            await Respuesta.GenerarRespuesta (pregunta, id);
 
         }
+
     }
+}
