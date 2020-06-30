@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 namespace Library
 {
@@ -32,12 +32,12 @@ namespace Library
         {
             
         }
-        public override void Handle(Mensaje m)
+        public override async void Handle(Mensaje m)
         {
             try
             {                
             this.BuscarRegalo(m.Id);            
-            this.Preguntar(m.Id);
+            await this.Preguntar(m.Id);
             }   
             catch (NullReferenceException)
             {
@@ -62,10 +62,11 @@ namespace Library
             
         }
 
-        public override void Preguntar(long id)
+        public override async Task Preguntar (long id)
         {
-            string pregunta = Respuesta.DefinirFrase(this);
-            Respuesta.GenerarRespuesta(pregunta,id);
+            string pregunta = Respuesta.DefinirFrase (this);
+            await Respuesta.GenerarRespuesta (pregunta, id);
+
         }
     }
 }

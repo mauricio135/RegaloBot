@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Telegram.Bot.Examples.Echo;
 
 namespace Library
@@ -16,16 +17,20 @@ namespace Library
             get => imagen;
             set => imagen = value;
         }
-        public override void EnviarTexto ()
+        public async override Task EnviarTexto ()
         {
-            TelegramAPI.Contestar (this.Id, this.Contenido);
+            await TelegramAPI.Contestar (this.Id, this.Contenido);
+          //  await TelegramAPI.Contestar2 (this.Id, this.Contenido);            
+            
+           // await TelegramAPI.SendInlineKeyboard(this.Id);
+            
         }
-        public override async void EnviarImagen (string url)
+        public override async Task EnviarImagen (string url)
         {
 
             await TelegramAPI.EnviarFoto (this.Id, url);
         }
-        public async void EnviarGif (string url)
+        public async Task EnviarGif (string url)
         {
 
             await TelegramAPI.EnviarGif (this.Id, url);
