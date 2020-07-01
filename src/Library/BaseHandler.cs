@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Library
 {
@@ -17,7 +18,7 @@ namespace Library
                 this.Siguiente.Handle(m);
             }
         }
-        public abstract void Preguntar(long id);
+        public abstract Task Preguntar(long id);
         
     }
 }

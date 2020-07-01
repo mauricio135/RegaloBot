@@ -1,17 +1,17 @@
-using Telegram.Bot.Examples.Echo;
 using System;
+using System.Threading.Tasks;
+using Telegram.Bot.Examples.Echo;
 namespace Library
 {
     public class Bot
     {
-        public async static void IniciarBot ()
+        public static async void IniciarBot ()
         {
-            
-            var TelegramAsync = TelegramAPI.IniciarTelegram ();
-            var commandlineAsync = Consola.IniciarConsolaAsync();
+            TelegramAPI.IniciarTelegram ();
+            var con = Consola.IniciarConsolaAsync ();
 
-        
-          
+            string cont = await con;
+
         }
 
     }

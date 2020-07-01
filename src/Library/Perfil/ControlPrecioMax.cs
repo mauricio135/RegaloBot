@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Library
 {
     /// <summary>
@@ -36,14 +38,14 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle (Mensaje m)
+        public override async void Handle (Mensaje m)
         {
             if (BibliotecaPerfiles.GetUsuario (m.Id).PrecioMax == -1)
             {
                 if (!UsuariosPreguntados.Contains (m.Id))
                 {
                     UsuariosPreguntados.Add (m.Id);
-                    Preguntar (m.Id);
+                    await Preguntar (m.Id);
                 }
                 else
                 {
@@ -54,7 +56,7 @@ namespace Library
                     try 
                     {
                         int precioMax = Int32.Parse(m.Contenido);
-                        EditorPerfil.SetEdad (m.Id, precioMax);
+                        EditorPerfil.SetPrecioMax (m.Id, precioMax);
                         //Si está todo OK, paso al siguiente eslabón
                         Siguiente.Handle (m);
 
@@ -65,10 +67,22 @@ namespace Library
                     /// </summary>
                     catch(FormatException)
                     {
-                        Respuesta.PedirAclaracion (m.Id);
-                        Preguntar (m.Id);;
+
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id);
+                        await Preguntar (m.Id);
 
                     }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        await Respuesta.ErrorPrecioMax(m.Id);
+                        await Preguntar(m.Id);
+                    }
+
 
                 }
             }
@@ -81,10 +95,10 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de Precio Maximo.
         /// </summary>
-        public override void Preguntar (long id)
+        public override async Task Preguntar (long id)
         {
             string pregunta = Respuesta.DefinirFrase (this);
-            Respuesta.GenerarRespuesta (pregunta, id);
+            await Respuesta.GenerarRespuesta (pregunta, id);
 
         }
 

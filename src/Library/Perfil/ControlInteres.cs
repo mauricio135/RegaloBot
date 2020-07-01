@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Library
 {
     /// <summary>
@@ -35,19 +37,27 @@ namespace Library
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
 
-        public override void Handle(Mensaje m)
+        public override async void Handle(Mensaje m)
         {
             if (BibliotecaPerfiles.GetUsuario(m.Id).Interes == null)
             {
                 if (!UsuariosPreguntados.Contains(m.Id))
                 {
-                    Preguntar(m.Id);
+                    await Preguntar(m.Id);
                     UsuariosPreguntados.Add(m.Id);
                 }
                 else
                 {
+                    try
+                    {
                     EditorPerfil.SetInteres(m.Id, m.Contenido);
                     Siguiente.Handle(m);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Respuesta.PedirAclaracion (m.Id);
+                        Preguntar (m.Id);
+                    }
                 }
             }
             else
@@ -59,11 +69,11 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un interés.
         /// </summary>
-            public override void Preguntar(long id)
+      public override async Task Preguntar (long id)
         {
-            string pregunta = Respuesta.DefinirFrase(this);
-            Respuesta.GenerarRespuesta(pregunta,id);
-            
+            string pregunta = Respuesta.DefinirFrase (this);
+            await Respuesta.GenerarRespuesta (pregunta, id);
+
         }
     }
 }
