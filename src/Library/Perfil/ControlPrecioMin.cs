@@ -19,7 +19,7 @@ namespace Library
 
         /// <summary>
         /// Método que corresponde al patrón Chain of Responsibility.
-        /// En caso de que el precio minimo correspondiente al perfil que envía el mensaje
+        /// En caso de que el precio minimo correspondiente al perfil que envía el mensaje 
         /// esté fijado en el valor inicial de -1, se pide un valor de Precio Minimo,
         /// y se agrega el ID a la lista de UsuariosPreguntados.
         /// 
