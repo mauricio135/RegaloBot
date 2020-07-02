@@ -4,8 +4,20 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    public class Busqueda: BaseHandler
+    public class Busqueda : BaseHandler
     {
+        private List<string> afirmativo = new List<string>
+        {
+            "si",
+            "correcto",
+            "vapai",
+            "OK",
+            "sabelo",
+            "me encanta",
+            "buenisimo",
+            "obvio",
+            "dale"
+        };
 
         private ITienda tienda;
         private IGeneradorRegalo generadorRegalo;
@@ -28,46 +40,98 @@ namespace Library
             set => impresora = value;
         }
 
-        public Busqueda()
+        public Busqueda ()
         {
-            
+            this.Siguiente = new Despedida ();
+
         }
-        public override async void Handle(Mensaje m)
+        public override async void Handle (Mensaje m)
+        {
+            Perfil perfil = BibliotecaPerfiles.GetUsuario (m.Id);
+            if (!perfil.RegistroPreguntas.Busqueda)
+            {
+                await EjecutarBusqueda (m.Id, m.Plataforma);
+                perfil.RegistroPreguntas.Busqueda = true;
+
+            }
+            else
+            {
+                if (afirmativo.Contains (m.Contenido.ToLower ()))
+                {
+                    Siguiente.Handle (m);
+
+                }
+                else
+                {
+                    await EjecutarBusqueda (m.Id, m.Plataforma);
+                }
+
+            }
+        }
+        private async Task EjecutarBusqueda (long id, TipoPlataforma plat)
         {
             try
-            {                
-            await this.BuscarRegalo(m.Id);            
-            await this.Preguntar(m.Id);
-            }   
+            {
+                await this.BuscarRegalo (id, plat);
+                await this.Preguntar (id, plat);
+            }
             catch (NullReferenceException)
             {
-                Respuesta.ErrorApi(m.Id);
+                await Respuesta.ErrorApi (id, plat);
 
-            }         
+            }
+
         }
-    
 
-        public async Task BuscarRegalo (long idPerfil)
+        public async Task BuscarRegalo (long idPerfil, TipoPlataforma plat)
         {
-            int precioMin = BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMin;
-            int precioMax = BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMax;
+            Perfil perfil = BibliotecaPerfiles.GetUsuario (idPerfil);
+
+            int precioMin = perfil.PrecioMin;
+            int precioMax = perfil.PrecioMax;
+            string interes = perfil.Interes;
+
+            if (interes != null)
+            {
+                List<Regalo> regalos = tienda.BuscarRegalo (interes);
+                try
+                {
+                    Regalo resultado = this.procesadorSugerencias.ProcesarRegalos (regalos, precioMin, precioMax);
+
+                    await ImpresoraRegalo.EnviarRegalo (resultado, idPerfil, plat);
+                }
+                catch
+                {
+                    await Respuesta.ErrorResultado (idPerfil, plat);
+
+                }
+
+            }
+
             for (int i = 0; i < 3; i++)
             {
-                string regaloSugerido = generadorRegalo.SugerenciaRegalo(idPerfil);
-                List<Regalo> regalos = tienda.BuscarRegalo(regaloSugerido);
-                List<Regalo> resultados = this.procesadorSugerencias.ProcesarRegalos(regalos, precioMin, precioMax);
-                foreach (Regalo resultado in resultados)
+                string regaloSugerido = generadorRegalo.SugerenciaRegalo (idPerfil);
+                List<Regalo> regalos = tienda.BuscarRegalo (regaloSugerido);
+                try
                 {
-                    await ImpresoraRegalo.EnviarRegalo(resultado, idPerfil);
-                } 
+                    Regalo resultado = this.procesadorSugerencias.ProcesarRegalos (regalos, precioMin, precioMax);
+
+                    await ImpresoraRegalo.EnviarRegalo (resultado, idPerfil, plat);
+                }
+                catch
+                {
+                    await Respuesta.ErrorResultado (idPerfil, plat);
+
+                }
+
             }
-            
+
         }
 
-        public override async Task Preguntar (long id)
+        public override async Task Preguntar (long id, TipoPlataforma plat)
         {
             string pregunta = Respuesta.DefinirFrase (this);
-            await Respuesta.GenerarRespuesta (pregunta, id);
+            await Respuesta.GenerarRespuesta (pregunta, id, plat);
 
         }
     }

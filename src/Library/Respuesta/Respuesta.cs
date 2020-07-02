@@ -7,141 +7,69 @@ namespace Library
     public class Respuesta
     {
 
-        private static List<string> confusion = new List<string> ()
+        public static async Task GenerarRespuesta (string contenido, long id, TipoPlataforma plataforma)
         {
 
-            "https://media.giphy.com/media/uN5iwZB2v2dH2/giphy.gif",
-            "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif",
-            "https://media.giphy.com/media/eChf44Gyj2VrO/giphy.gif",
-            "https://media.giphy.com/media/APqEbxBsVlkWSuFpth/giphy.gif",
-            "https://media.giphy.com/media/xx60sEpNkUBAk/giphy.gif",
-            "https://media.giphy.com/media/Vo6YaTLaSMGqI/giphy.gif",
-            "https://media.giphy.com/media/vsZF2hC9cH0Mo/giphy.gif",
-            "https://media.giphy.com/media/QE8hREXIgRXeo/giphy.gif",
-            "https://media.giphy.com/media/E2WEi5K1QzPxK/giphy.gif",
-            "https://media.giphy.com/media/xL7PDV9frcudO/giphy.gif",
-            "https://media.giphy.com/media/1X7lCRp8iE0yrdZvwd/giphy.gif"
-
-        };
-        private static ILectorArchivos lectorArchivos;
-        public static async Task GenerarRespuesta (string contenido, long id)
-        {
-            //string cont = BuscarFrase (archivo);
-            MensajeSalida mensaje;
-
-            switch (id)
-            {
-                case 0:
-                    mensaje = new MensajeSalidaConsola (contenido, id);
-                    break;
-
-                default:
-                    mensaje = new MensajeSalidaTelegram (contenido, id);
-
-                    break;
-
-            }
+            MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (contenido, id, plataforma);
 
             await BandejaSalida.EnviarMensaje (mensaje);
 
         }
-        public static async Task PedirAclaracion (long id)
+        public static async Task PedirAclaracion (long id, TipoPlataforma plataforma)
         {
             string respuesta = "Ups, no te entendí, puedes volver a respoder?";
 
-            MensajeSalida mensaje;
+            MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (respuesta, id, plataforma);
 
-            switch (id)
-            {
-                case 0:
-                    mensaje = new MensajeSalidaConsola (respuesta, id);
-                    break;
-
-                default:
-                    mensaje = new MensajeSalidaTelegram (respuesta, id);
-
-                    break;
-
-            }
-            string conf;
-            var random = new Random ();
-            int indice = random.Next (confusion.Count);
-            conf = confusion[indice];
-            await BandejaSalida.EnviarGif (mensaje, conf);
+            await BandejaSalida.EnviarReaccion (mensaje);
             await BandejaSalida.EnviarMensaje (mensaje);
 
         }
 
-        public static async void ErrorApi (long id)
+        public static async Task ErrorApi (long id, TipoPlataforma plataforma)
         {
             string respuesta = "Oh no!, Se cayó Mercado Libre!";
 
-            MensajeSalida mensaje;
-
-            switch (id)
-            {
-                case 0:
-                    mensaje = new MensajeSalidaConsola (respuesta, id);
-                    break;
-
-                default:
-                    mensaje = new MensajeSalidaTelegram (respuesta, id);
-
-                    break;
-
-            }
+            MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (respuesta, id, plataforma);
 
             await BandejaSalida.EnviarMensaje (mensaje);
 
         }
-        public static async void EnviaGif (MensajeSalida mensaje, string urlGif)
+        public static async Task ErrorResultado (long id, TipoPlataforma plataforma)
         {
+            string respuesta = "No hay resultados por aquí...";
 
-            if (mensaje.Id != 0)
-            {
-                await BandejaSalida.EnviarGif (mensaje, urlGif);
+            MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (respuesta, id, plataforma);
 
-            }
+            await BandejaSalida.EnviarMensaje (mensaje);
 
         }
-        public static async Task EnviaRegalo (string regalo, long id)
+        public static async Task Reaccion (MensajeSalida mensaje)
         {
-            MensajeSalida mensaje;
+            await BandejaSalida.EnviarReaccion (mensaje);
 
-            switch (id)
-            {
-                case 0:
-                    mensaje = new MensajeSalidaConsola (regalo, id);
-                    break;
+        }
+        public static async Task EnviaRegalo (string regalo, long id, TipoPlataforma plataforma)
+        {
 
-                default:
-                    mensaje = new MensajeSalidaTelegram (regalo, id);
-                    ImagenURL imagen = new ImagenURL ();
-                    //   imagen.GuardarImagen ("https://http2.mlstatic.com/D_NQ_NP_742328-MLU33039077458_112019-V.webp");
-
-                    //   MensajeSalidaTelegram men = (MensajeSalidaTelegram) mensaje;
-                    //    men.Imagen = (@"C:\Users\FIT\repos\RegaloBot\src\Library\Respuesta\foto.webp");
-
-                    break;
-
-            }
+            MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (regalo, id, plataforma);
 
             await BandejaSalida.EnviarMensaje (mensaje);
 
         }
 
-        public static async Task ErrorEdad (long id)
+        public static async Task ErrorEdad (long id, TipoPlataforma plataforma)
         {
-            await GenerarRespuesta ("La edad debe ser un número entre 0 y 120", id);
+            await GenerarRespuesta ("La edad debe ser un número entre 0 y 120", id, plataforma);
         }
 
-        public static async Task ErrorPrecio (long id)
+        public static async Task ErrorPrecio (long id, TipoPlataforma plataforma)
         {
-            await GenerarRespuesta ("El precio debe ser un valor positivo", id);
+            await GenerarRespuesta ("El precio debe ser un valor positivo", id, plataforma);
         }
-        public static async Task ErrorPrecioMax (long id)
+        public static async Task ErrorPrecioMax (long id, TipoPlataforma plataforma)
         {
-            await GenerarRespuesta ("El precio máximo debe ser un valor positivo y no puede ser menor al mínimo", id);
+            await GenerarRespuesta ("El precio máximo debe ser un valor positivo y no puede ser menor al mínimo", id, plataforma);
         }
 
         public static string BuscarFrase (string archivo)
@@ -165,6 +93,10 @@ namespace Library
         public static string DefinirFrase (ControlInteres interes)
         {
             return "Cuales son sus Intereses? que le gusta?";
+        }
+        public static string DefinirFrase (Despedida despedida)
+        {
+            return "nos vemos, Chau!";
         }
         public static string DefinirFrase (ControlRelacion relacion)
         {

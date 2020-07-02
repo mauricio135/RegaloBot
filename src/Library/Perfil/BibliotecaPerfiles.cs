@@ -10,11 +10,11 @@ namespace Library
         /// Constructor privado para asegurar una única instancia de esta clase que contenga a todos los perfiles.
         /// Se aplica el patrón Singleton para evitar que se genere una segunda instancia que contenga elementos aislados.
         /// </summary>
-        private BibliotecaPerfiles()
+        private BibliotecaPerfiles ()
         {
 
         }
-        public static List<Perfil> lista = new List<Perfil>();
+        public static List<Perfil> lista = new List<Perfil> ();
         private static BibliotecaPerfiles instance;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Library
             {
                 if (instance == null)
                 {
-                    instance = new BibliotecaPerfiles();
+                    instance = new BibliotecaPerfiles ();
                 }
 
                 return instance;
@@ -38,14 +38,14 @@ namespace Library
         /// </summary>
         /// <param name="idIngresado">Parámetro del tipo long que identifica a cada Perfil</param>
         /// <returns>Retorna true si en la Biblioteca de perfiles hay un Perfil identificado con ese ID, y false en caso contrario.</returns>
-        public bool ExisteUsuario(long idIngresado)
+        public bool ExisteUsuario (long idIngresado)
         {
             foreach (Perfil usuario in lista)
             {
                 if (usuario.Id == idIngresado)
                 {
                     return true;
-                }      
+                }
             }
             return false;
         }
@@ -57,8 +57,12 @@ namespace Library
         /// <param name="idNuevo">Número de ID de la conversación desde la que se interactúa. Es un atributo único para cada Perfil</param>
         public void CrearUsuario (long idNuevo)
         {
-            Perfil nuevoUsuario = new Perfil(idNuevo);
-            lista.Add(nuevoUsuario);
+            Perfil nuevoUsuario = new Perfil (idNuevo);
+            lista.Add (nuevoUsuario);
+        }
+        public static void EliminarUsuario (long id)
+        {
+            lista.Remove (GetUsuario (id));
         }
         /// <summary>
         /// Dado un número de ID, devuelve la instancia de Perfil correspondiente.
@@ -73,7 +77,7 @@ namespace Library
                 if (usuario.Id == idUsuario)
                 {
                     return usuario;
-                }      
+                }
             }
             return null;
         }

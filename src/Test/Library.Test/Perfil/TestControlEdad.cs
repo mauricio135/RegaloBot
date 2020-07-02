@@ -11,9 +11,9 @@ namespace Library.Test.Perfil
         {
             Library.BibliotecaPerfiles biblioteca = Library.BibliotecaPerfiles.Instance;
             biblioteca.CrearUsuario(0);
-            Mensaje mensaje = new Mensaje("stub", 0);
+            Mensaje mensaje = new Mensaje("stub", 0,TipoPlataforma.Consola);
             ControlEdadStub control = new ControlEdadStub();
-            control.SetPreguntados(0);
+            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.Edad = true;
 
             control.Handle(mensaje);
 
@@ -37,9 +37,9 @@ namespace Library.Test.Perfil
         {
             Library.BibliotecaPerfiles biblioteca = Library.BibliotecaPerfiles.Instance;
             biblioteca.CrearUsuario(0);
-            Mensaje mensaje = new Mensaje("25", 0);
+            Mensaje mensaje = new Mensaje("25", 0,TipoPlataforma.Consola);
             ControlEdadStub control = new ControlEdadStub();
-            control.SetPreguntados(0);
+            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.Edad = true;
 
             control.Handle(mensaje);
 
@@ -52,9 +52,9 @@ namespace Library.Test.Perfil
         {
             Library.BibliotecaPerfiles biblioteca = Library.BibliotecaPerfiles.Instance;
             biblioteca.CrearUsuario(0);
-            Mensaje mensaje = new Mensaje("25", 0);
+            Mensaje mensaje = new Mensaje("25", 0,TipoPlataforma.Consola);
             ControlEdadStub control = new ControlEdadStub();
-            control.SetPreguntados(0);
+            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.Edad = true;
 
             control.Handle(mensaje);
 

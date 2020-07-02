@@ -17,9 +17,9 @@ namespace Library
         /// <param name="contenido">Contenido del mensaje enviado por el usuario</param>
         /// <param name="id">Número identificador de la conversación de la que proviene el contenido (único para cada conversación)</param>
         /// <returns></returns>
-        public static Task RecibirMensaje(string contenido, long id)
+        public static Task RecibirMensaje(string contenido, long id, TipoPlataforma plataforma)
         {
-            GeneradorPerfil.BuscarUsuario(new Mensaje (contenido, id));
+            GeneradorPerfil.BuscarUsuario(new Mensaje (contenido, id, plataforma));
             return Task.CompletedTask;
         }
     }

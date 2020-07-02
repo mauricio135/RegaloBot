@@ -16,7 +16,7 @@ namespace Library
         public string Precio
         {
             get => precio;
-            set => precio = value;
+            set => precio = value.Replace(".","");
         }
         public string Moneda
         {
