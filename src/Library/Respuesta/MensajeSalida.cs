@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Library
 {
     public abstract class MensajeSalida
@@ -20,8 +22,8 @@ namespace Library
             this.id = num;
             this.contenido = cont;
         }
-        public abstract void EnviarTexto();
-        public  abstract void EnviarImagen(string ruta);
+        public abstract Task EnviarTexto();
+        public abstract Task EnviarReaccion();
        
 
     }

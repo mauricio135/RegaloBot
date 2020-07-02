@@ -10,20 +10,23 @@ namespace Library
         public static async Task<string> IniciarConsolaAsync ()
         {
 
-            string recibido = Console.ReadLine ();
+             string recibido = Console.ReadLine ();
+            //Task<string> recibi = ReadlineAsync ();
+           // string recibido = await recibi;
+
             while (recibido != "quit")
             {
-                await Plataforma.RecibirMensaje (recibido, 0);                
+                await Plataforma.RecibirMensaje (recibido, 0 , TipoPlataforma.Consola);
                 recibido = Console.ReadLine ();
 
             }
             return recibido;
         }
-        /*  public static Task<string> ReadlineAsync ()
+     /*   public static Task<string> ReadlineAsync ()
         {
             return Task.Run (() => Console.ReadLine ());
 
         }
-    */
+*/
     }
 }

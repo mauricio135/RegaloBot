@@ -1,20 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Library
 {
     /// <summary>
     /// Cuarto eslabón del patrón Chain Of Responsibility. Se encarga de recibir un interés
     /// del Perfil que se crea, efectuando los controles necesarios para obtener un  parámetro válido.
     /// </summary>
-    public class ControlInteres: BaseHandler
+    public class ControlInteres : BaseHandler
     {
-         /// <summary>
+        /// <summary>
         /// Como ControlInteres contiene un objeto del tipo ControlPrecioMin (siguiente eslabón de COR), aplicamos
         /// patrón Creator para asignarle a ControlInteres la responsabilidad de crear objetos ControlPrecioMin.
         /// </summary>
-        public ControlInteres()
+        public ControlInteres ()
         {
-            this.Siguiente = new ControlPrecioMin();
+            this.Siguiente = new ControlPrecioMin ();
         }
 
         /// <summary>
@@ -35,35 +37,50 @@ namespace Library
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
 
-        public override void Handle(Mensaje m)
+        public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario(m.Id).Interes == null)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.Interes == null)
             {
-                if (!UsuariosPreguntados.Contains(m.Id))
+                if (!perfil.RegistroPreguntas.Interes)
                 {
-                    Preguntar(m.Id);
-                    UsuariosPreguntados.Add(m.Id);
+                    await Preguntar (m.Id, m.Plataforma);
+                    perfil.RegistroPreguntas.Interes = true;
                 }
                 else
                 {
-                    EditorPerfil.SetInteres(m.Id, m.Contenido);
-                    Siguiente.Handle(m);
+                    try
+                    {
+                        EditorPerfil.SetInteres (m.Id, m.Contenido);
+                        Siguiente.Handle (m);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+
+                    }
                 }
             }
             else
             {
-                Siguiente.Handle(m);
+                Siguiente.Handle (m);
             }
         }
         /// <summary>
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un interés.
         /// </summary>
-            public override void Preguntar(long id)
+        public override async Task Preguntar (long id, TipoPlataforma plat)
         {
-            string pregunta = Respuesta.DefinirFrase(this);
-            Respuesta.GenerarRespuesta(pregunta,id);
-            
+            string pregunta = Respuesta.DefinirFrase (this);
+            await Respuesta.GenerarRespuesta (pregunta, id, plat);
+
         }
     }
 }

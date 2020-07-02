@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Library
 {
     /// <summary>
@@ -100,14 +102,15 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle (Mensaje m)
+        public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).Relacion == TipoAfinidad.Vacio)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.Relacion == TipoAfinidad.Vacio)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.Relacion)
                 {
-                    UsuariosPreguntados.Add (m.Id);
-                    Preguntar (m.Id);
+                   perfil.RegistroPreguntas.Relacion =true; 
+                    await Preguntar (m.Id,m.Plataforma);
                 }
                 else
                 {
@@ -119,10 +122,18 @@ namespace Library
                     }
                     catch (ArgumentException)
                     {
-                        Respuesta.PedirAclaracion (m.Id);
-                        Preguntar (m.Id);
+                        await Respuesta.PedirAclaracion (m.Id,m.Plataforma);
+                        await Preguntar (m.Id,m.Plataforma);
 
                     }
+                    catch (NullReferenceException)
+                    {
+
+                        await Respuesta.PedirAclaracion (m.Id,m.Plataforma);
+                        await Preguntar (m.Id,m.Plataforma);
+
+                    }
+                    
 
                 }
             }
@@ -135,10 +146,10 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un tipo de relación.
         /// </summary>
-        public override void Preguntar (long id)
+        public override async Task Preguntar (long id,TipoPlataforma plat)
         {
             string pregunta = Respuesta.DefinirFrase (this);
-            Respuesta.GenerarRespuesta (pregunta, id);
+            await Respuesta.GenerarRespuesta (pregunta, id,plat);
 
         }
         private TipoAfinidad BuscoAfinidad (string mensaje)

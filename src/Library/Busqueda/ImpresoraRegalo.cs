@@ -1,12 +1,13 @@
 using System;
+using System.Threading.Tasks;
+
 namespace Library
 {
     public class ImpresoraRegalo
     {
-        public static void EnviarRegalo (Regalo regalo, long idPerfil)
+        public static async Task EnviarRegalo (Regalo regalo, long idPerfil ,TipoPlataforma plat)
         {
-            Respuesta.EnviaRegalo(regalo.ToString(), idPerfil);
-           // Console.WriteLine(regalo.ToString());
+           await Respuesta.EnviaRegalo(regalo.ToString(), idPerfil , plat);
         }
     }
 }

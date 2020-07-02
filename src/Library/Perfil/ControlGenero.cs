@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Telegram.Bot.Examples.Echo;
+
 namespace Library
 {
     /// <summary>
@@ -62,33 +65,48 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle (Mensaje m)
+        public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).Genero == TipoGenero.Vacio)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.Genero == TipoGenero.Vacio)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.Genero)
                 {
-                    UsuariosPreguntados.Add (m.Id);
-                    Preguntar (m.Id);
+                    perfil.RegistroPreguntas.Genero = true;
+                    await Preguntar (m.Id, m.Plataforma);
                 }
                 else
                 {
-                    TipoGenero genero;
-                    if (masculino.Contains (m.Contenido))
+                    try
                     {
-                        genero = TipoGenero.Masculino;
-                    }
-                    else if (femenino.Contains (m.Contenido.ToLower()))
-                    {
-                        genero = TipoGenero.Femenino;
-                    }
-                    else
-                    {
-                        genero = TipoGenero.Indefinido;
-                    }
+                        TipoGenero genero;
+                        if (masculino.Contains (m.Contenido))
+                        {
+                            genero = TipoGenero.Masculino;
+                        }
+                        else if (femenino.Contains (m.Contenido.ToLower ()))
+                        {
+                            genero = TipoGenero.Femenino;
+                        }
+                        else
+                        {
+                            genero = TipoGenero.Indefinido;
+                        }
 
-                    EditorPerfil.SetGenero (m.Id, genero);
-                    Siguiente.Handle (m);
+                        EditorPerfil.SetGenero (m.Id, genero);
+                        Siguiente.Handle (m);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+
+                    }
                 }
             }
             else
@@ -100,10 +118,12 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un tipo de género.
         /// </summary>
-        public override void Preguntar (long id)
+        public override async Task Preguntar (long id, TipoPlataforma plat)
         {
+
             string pregunta = Respuesta.DefinirFrase (this);
-            Respuesta.GenerarRespuesta (pregunta, id);
+            await Respuesta.GenerarRespuesta (pregunta, id, plat);
+            //  await TelegramAPI.SendReplyKeyboard(id);
 
         }
 

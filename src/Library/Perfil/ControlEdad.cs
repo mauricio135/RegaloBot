@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Library
 {
     /// <summary>
@@ -34,32 +36,51 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle (Mensaje m)
+        public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).Edad == -1)
+            Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.Edad == -1)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.Edad)
                 {
-                    UsuariosPreguntados.Add (m.Id);
-                    Preguntar (m.Id);
+                    perfil.RegistroPreguntas.Edad = true;
+                    await Preguntar (m.Id,m.Plataforma);
                 }
                 else
                 {
-                    int edad;
-
-                    if (Int32.TryParse (m.Contenido, out edad))
+                    //
+                    /// Intento parsear el contenido del mensaje a un numero entero, si lo consigue pasa al siguiente eslabón.
+                    //
+                    
+                    try 
                     {
+                        int edad = Int32.Parse(m.Contenido);
                         EditorPerfil.SetEdad (m.Id, edad);
-                        //Si está todo OK, paso al siguiente eslabón
                         Siguiente.Handle (m);
 
                     }
-                    else
+                    //
+                    /// Si el parseo falla, por ejemplo si recibo una letra, captura la excepción y envia un mensaje al usuario
+                    /// pidiendo que ingrese un valor valido de edad
+                    //
+                    catch(FormatException)
                     {
-                        Respuesta.PedirAclaracion (m.Id);
-                        Preguntar(m.Id);
+
+                        await Respuesta.PedirAclaracion (m.Id,m.Plataforma);
+                        await Preguntar (m.Id,m.Plataforma);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        await Respuesta.ErrorEdad(m.Id,m.Plataforma);
 
                     }
+                    catch (ArgumentNullException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id,m.Plataforma);
+                        await Preguntar (m.Id,m.Plataforma);
+
+                    }
+                    
 
                 }
             }
@@ -72,10 +93,10 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de Edad.
         /// </summary>
-        public override void Preguntar (long id)
+        public override async Task Preguntar (long id  ,TipoPlataforma plat)
         {
             string pregunta = Respuesta.DefinirFrase (this);
-            Respuesta.GenerarRespuesta (pregunta, id);
+           await Respuesta.GenerarRespuesta (pregunta, id , plat);
 
         }
 

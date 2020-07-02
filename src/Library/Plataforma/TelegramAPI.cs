@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +10,7 @@ using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InputFiles;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Telegram.Bot.Examples.Echo
 {
@@ -24,7 +26,7 @@ namespace Telegram.Bot.Examples.Echo
         /// </summary>
         private static string Token = "1028487705:AAFJ_hNrtFc2T4xhdIC4MYUZlXHBmVWfkaQ";
 
-        public static async Task IniciarTelegram ()
+        public static void IniciarTelegram ()
         {
             Bot = new TelegramBotClient (Token);
             var cts = new CancellationTokenSource ();
@@ -84,36 +86,74 @@ namespace Telegram.Bot.Examples.Echo
         private static async Task HandleMessageReceived (Message message)
         {
             Console.WriteLine ($"Received a message from {message.From.FirstName} saying: {message.Text}");
-            await Plataforma.RecibirMensaje (message.Text, message.Chat.Id);
+            await Plataforma.RecibirMensaje (message.Text, message.Chat.Id ,TipoPlataforma.Telegram);
         }
 
-        public static async void Contestar (long id, string respuesta)
+        public static async Task Contestar (long id, string respuesta)
         {
-            await Bot.SendTextMessageAsync (id, respuesta ,ParseMode.Markdown);
+
+            await Bot.SendTextMessageAsync (id, respuesta, ParseMode.Default);
+
+        }
       
-        }
-         public static async Task EnviarGif (long id, string gif)
+
+         public  static async Task SendInlineKeyboard(long id )
+            {
+                await Bot.SendChatActionAsync(id, ChatAction.Typing);
+
+                // Simulate longer running task
+                await Task.Delay(500);
+
+                var inlineKeyboard = new InlineKeyboardMarkup(new[]
+                {
+                    // first row
+                    new []
+                    {
+                        InlineKeyboardButton.WithCallbackData("1.1", "11"),
+                        InlineKeyboardButton.WithCallbackData("1.2", "12"),
+                    },
+                    // second row
+                    new []
+                    {
+                        InlineKeyboardButton.WithCallbackData("2.1", "21"),
+                        InlineKeyboardButton.WithCallbackData("2.2", "22"),
+                    }
+                });
+                await Bot.SendTextMessageAsync(
+                    chatId: id,
+                    text: "Choose",
+                    replyMarkup: inlineKeyboard
+                );
+            }
+
+           public static async Task SendReplyKeyboard(long id)
+            {
+                var replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                    new KeyboardButton[][]
+                    {
+                        new KeyboardButton[] { "Hombre", "Mujer" },
+                        new KeyboardButton[] { "No te interesa" },
+                    },
+                    resizeKeyboard: true
+                );
+                   await Bot.SendTextMessageAsync(
+                    chatId: id,
+                    text: "Por favor selecciona una opción",
+                    replyMarkup: replyKeyboardMarkup
+
+                );
+            }
+
+
+
+        public static async Task EnviarGif (long id, string gif)
         {
-           // await Bot.SendVideoAsync (id, gif);
-             await Bot.SendAnimationAsync (id, gif);
 
+            await Bot.SendAnimationAsync (id, gif);
 
         }
 
-        public static async Task EnviarFoto (long id, string ruta)
-        {
-            await Bot.SendChatActionAsync (id, ChatAction.UploadPhoto);
 
-            string filePath = ruta;
-            var fileStream = new FileStream (filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            var fileName = filePath.Split (Path.DirectorySeparatorChar).Last ();
-            await Bot.SendPhotoAsync (
-                chatId: id,
-                photo: new InputOnlineFile (fileStream, fileName),
-                caption: "te gusta?"
-            );
-        }
-        
 
     }
 }

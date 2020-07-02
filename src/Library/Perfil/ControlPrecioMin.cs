@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Library
 {
     /// <summary>
@@ -34,49 +36,78 @@ namespace Library
         /// por lo que se envía el mensaje hacia el siguiente eslabón. 
         /// </summary>
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
-        public override void Handle (Mensaje m)
+        public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).PrecioMin == -1)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.PrecioMin == -1)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.PrecioMin)
                 {
-                    UsuariosPreguntados.Add (m.Id);
-                    Preguntar (m.Id);
+                    perfil.RegistroPreguntas.PrecioMin = true;
+                    await Preguntar (m.Id, m.Plataforma);
                 }
                 else
                 {
-                    int precioMin;
-                    if (Int32.TryParse (m.Contenido, out precioMin))
-                        {
-                            EditorPerfil.SetPrecioMin (m.Id, precioMin);
-                            Siguiente.Handle (m);
 
-                        }
-                        else
-                        {
-                            Respuesta.PedirAclaracion(m.Id);
-                            Preguntar(m.Id);
+                    /// <summary>
+                    /// Intento parsear el contenido del mensaje a un numero entero, si lo consigue pasa al siguiente eslabón.
+                    /// </summary>
 
+                    try
+                    {
+                        int precioMin = Int32.Parse (m.Contenido);
+                        EditorPerfil.SetPrecioMin (m.Id, precioMin);
+                        //Si está todo OK, paso al siguiente eslabón
+                        Siguiente.Handle (m);
 
-                        }
+                    }
+                    /// <summary>
+                    /// Si el parseo falla, por ejemplo si recibo una letra, captura la excepción y envia un mensaje al usuario
+                    /// pidiendo que ingrese un valor valido de edad
+                    /// </summary>
+                    catch (FormatException)
+                    {
+
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+
+                    }
+                    catch (NullReferenceException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        await Respuesta.ErrorPrecio (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
 
                     }
                 }
-                else
-                {
-                    Siguiente.Handle (m);
-                }
             }
-            /// <summary>
-            /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
-            /// pedido por un valor de PrecioMin.
-            /// </summary>
-            public override void Preguntar (long id)
+
+            else
             {
-                string pregunta = Respuesta.DefinirFrase (this);
-                Respuesta.GenerarRespuesta (pregunta, id);
+                Siguiente.Handle (m);
 
             }
 
         }
+        /// <summary>
+        /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
+        /// pedido por un valor de PrecioMin.
+        /// </summary>
+        public override async Task Preguntar (long id, TipoPlataforma plat)
+        {
+            string pregunta = Respuesta.DefinirFrase (this);
+            await Respuesta.GenerarRespuesta (pregunta, id, plat);
+
+        }
+
     }
+}

@@ -15,14 +15,14 @@ namespace Library
         /// Verifica la existencia del Perfil en el sistema, y continúa (o comienza) la interacción.
         /// </summary>
         /// <param name="mensaje">Mensaje recibido desde Plataforma, que contiene el ID de la conversación.</param>
-        public static void BuscarUsuario (Mensaje mensaje)
+        public static async void BuscarUsuario (Mensaje mensaje)
         {
             if (!deposito.ExisteUsuario(mensaje.Id))
             {
                 deposito.CrearUsuario(mensaje.Id);
 
                 string pregunta = "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial";
-                 Respuesta.GenerarRespuesta(pregunta,mensaje.Id);
+                await Respuesta.GenerarRespuesta(pregunta,mensaje.Id,mensaje.Plataforma);
             }
                
             handler.Handle(mensaje);
