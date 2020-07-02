@@ -67,11 +67,12 @@ namespace Library
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
         public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).Genero == TipoGenero.Vacio)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.Genero == TipoGenero.Vacio)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.Genero)
                 {
-                    UsuariosPreguntados.Add (m.Id);
+                    perfil.RegistroPreguntas.Genero = true;
                     await Preguntar (m.Id, m.Plataforma);
                 }
                 else

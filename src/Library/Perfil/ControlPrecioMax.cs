@@ -40,11 +40,12 @@ namespace Library
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
         public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).PrecioMax == -1)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.PrecioMax == -1)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.PrecioMax)
                 {
-                    UsuariosPreguntados.Add (m.Id);
+                    perfil.RegistroPreguntas.PrecioMax = true;
                     await Preguntar (m.Id, m.Plataforma);
                 }
                 else

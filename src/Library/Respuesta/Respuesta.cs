@@ -94,6 +94,10 @@ namespace Library
         {
             return "Cuales son sus Intereses? que le gusta?";
         }
+        public static string DefinirFrase (Despedida despedida)
+        {
+            return "nos vemos, Chau!";
+        }
         public static string DefinirFrase (ControlRelacion relacion)
         {
             return "Cual es tu relación con esta persona?";

@@ -39,12 +39,13 @@ namespace Library
 
         public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).Interes == null)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.Interes == null)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.Interes)
                 {
                     await Preguntar (m.Id, m.Plataforma);
-                    UsuariosPreguntados.Add (m.Id);
+                    perfil.RegistroPreguntas.Interes = true;
                 }
                 else
                 {

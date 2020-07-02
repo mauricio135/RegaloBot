@@ -6,7 +6,6 @@ namespace Library
 {
     public class MensajeSalidaConsola : MensajeSalida
     {
-        private string imagen;
 
         public MensajeSalidaConsola (string cont, long num) : base (cont, num)
         {
@@ -21,7 +20,7 @@ namespace Library
         }
         public override Task EnviarReaccion ()
         {
-            Console.WriteLine("No lo sé Rick, parece falso...");
+            Console.WriteLine ("No lo sé Rick, parece falso...");
             return Task.CompletedTask;
         }
 
