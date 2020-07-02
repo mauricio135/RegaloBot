@@ -1,0 +1,6 @@
+¿Es un Hombre o una mujer?.
+¿Es Femenina o Masculino?.
+Por favor ingrese el genero de la persona.
+¿Hombre o Mujer?.
+
+
