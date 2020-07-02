@@ -1,5 +1,8 @@
 namespace Library
 {
+/// <summary>
+/// La clase BusquedaBuilder implementa ITiendaBuilder
+/// </summary>
     public class BusquedaBuilder : ITiendaBuilder
     {
         private Busqueda busqueda;
