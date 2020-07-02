@@ -10,24 +10,30 @@ public class leerarchivo
   
     public static string Leer(string ruta)
     {   
-        string rutaRelativa = @"..\Archivo\";
+        string rutaRelativa = @"..\Library\Archivos\";
         string rutaFinal = rutaRelativa+ruta+".txt";
 
         List<string> saludos=new List<string>();
-        using (StreamReader leer = new StreamReader(rutaFinal))
+        
+        try
         {
+            using (StreamReader leer = new StreamReader(rutaFinal))
+            {
             string linea;
-
             while((linea=leer.ReadLine())!=null)
             {
                 saludos.Add(linea);         
             }
             leer.Close();
-        }
+            }
         var random = new Random();
         int indice = random.Next(saludos.Count);
         return saludos[indice];
+        }    
+        catch
+        {
+            return ruta;
 
-    }
-    
+        }
+    }    
 }

@@ -2,5 +2,3 @@
 ¿Es Femenina o Masculino?.
 Por favor ingrese el genero de la persona.
 ¿Hombre o Mujer?.
-
-

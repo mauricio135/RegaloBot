@@ -6,6 +6,3 @@ Hola.Conteste las siguientes preguntas.
 Hola!Complete las preguntas para ayudarnos a encontrar el regalo para esa persona especial.
 Bienvenid@ al GustaBot!
 Un gusto hablar con usted.
-
-
-

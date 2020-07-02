@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Library
 {
@@ -17,12 +18,24 @@ namespace Library
         }
         public static async Task PedirAclaracion (long id, TipoPlataforma plataforma)
         {
-            string respuesta = "Ups, no te entendí, puedes volver a respoder?";
-
-            MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (respuesta, id, plataforma);
+            string respuesta="Ups, no te entendí, puedes volver a responder?";
+            try
+            {
+            respuesta = leerarchivo.Leer("NoEntendi");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+                MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (respuesta, id, plataforma);
 
             await BandejaSalida.EnviarReaccion (mensaje);
             await BandejaSalida.EnviarMensaje (mensaje);
+           
 
         }
 
@@ -72,18 +85,42 @@ namespace Library
             await GenerarRespuesta ("El precio máximo debe ser un valor positivo y no puede ser menor al mínimo", id, plataforma);
         }
 
-        public static string BuscarFrase (string archivo)
-        {
-            return archivo;
-        }
-
         public static string DefinirFrase (ControlEdad edad)
         {
-            return "Cuantos años tiene?";
+            
+            string respuesta = "Cuantos años tiene";
+            try
+            {
+            respuesta = leerarchivo.Leer("Edad");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
         }
-        public static string DefinirFrase (ControlGenero edad)
+        public static string DefinirFrase (ControlGenero genero)
         {
-            return "El regalo es para un Hombre o una Mujer?";
+
+            string respuesta = "El regalo es para un Hombre o una Mujer?";
+            try
+            {
+            respuesta = leerarchivo.Leer("Genero");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
+            
         }
         public static string DefinirFrase (BaseHandler defecto)
         {
@@ -92,32 +129,147 @@ namespace Library
 
         public static string DefinirFrase (ControlInteres interes)
         {
-            return "Cuales son sus Intereses? que le gusta?";
+            
+            string respuesta = "Cuales son sus Intereses? que le gusta??";
+            try
+            {
+            respuesta = leerarchivo.Leer("Intereses");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
         }
         public static string DefinirFrase (Despedida despedida)
+
         {
-            return "nos vemos, Chau!";
+            string respuesta = "nos vemos ,Chau!";
+            try
+            {
+            respuesta = leerarchivo.Leer("Despedida");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
+            
         }
         public static string DefinirFrase (ControlRelacion relacion)
         {
-            return "Cual es tu relación con esta persona?";
+            
+            string respuesta = "Cual es tu relación con esta persona?";
+            try
+            {
+            respuesta = leerarchivo.Leer("Relacion");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
+            
         }
         public static string DefinirFrase (GeneradorPerfil perfil)
         {
-            return "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial.";;
+            string respuesta = "Hola! Gracias por escribirnos,nos sentiamos muy solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial.";
+            try
+            {
+            respuesta = leerarchivo.Leer("Saludo");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;        
         }
+        public static string DefinirFrase (string saludo)
+        {
+            string respuesta = "Hola! Gracias por escribirnos,nos sentiamos muy solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial.";
+            try
+            {
+            respuesta = leerarchivo.Leer("Saludo");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;        
+        }
+
         public static string DefinirFrase (Busqueda busqueda)
         {
-            return "Estas conforme con las Sugerencias?";
+            string respuesta = "Estas conforme con las Sugerencias?";
+            try
+            {
+            respuesta = leerarchivo.Leer("Busqueda");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
         }
 
         public static string DefinirFrase (ControlPrecioMin precioMin)
         {
-            return "Cual es el Precio Minimo que quieres Pagar?";
+            string respuesta = "Cual es el Precio Minimo que quieres Pagar?";
+            try
+            {
+            respuesta = leerarchivo.Leer("PrecioMin");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
         }
-        public static string DefinirFrase (ControlPrecioMax precioMin)
+        public static string DefinirFrase (ControlPrecioMax precioMax)
         {
-            return "Cual es el Precio Máximo que puedes pagar por este regalo?";
+            string respuesta ="Cual es el Precio Máximo que puedes pagar por este regalo?";
+            try
+            {
+            respuesta = leerarchivo.Leer("PrecioMax");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("No se encontro archivo");
+            }
+            return respuesta;
+            
         }
 
     }

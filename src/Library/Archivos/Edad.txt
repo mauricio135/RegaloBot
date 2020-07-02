@@ -4,4 +4,3 @@ Cual es la edad de la persona.
 Ingrese la edad de la persona.
 ¿Cuántos años tiene?
 ¿Cuántos años cumplidos tiene?
-
