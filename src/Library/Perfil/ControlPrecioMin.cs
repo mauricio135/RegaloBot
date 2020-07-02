@@ -43,18 +43,18 @@ namespace Library
                 if (!UsuariosPreguntados.Contains (m.Id))
                 {
                     UsuariosPreguntados.Add (m.Id);
-                   await Preguntar (m.Id);
+                    await Preguntar (m.Id, m.Plataforma);
                 }
                 else
                 {
 
-                     /// <summary>
+                    /// <summary>
                     /// Intento parsear el contenido del mensaje a un numero entero, si lo consigue pasa al siguiente eslabón.
                     /// </summary>
-                    
-                    try 
+
+                    try
                     {
-                        int precioMin = Int32.Parse(m.Contenido);
+                        int precioMin = Int32.Parse (m.Contenido);
                         EditorPerfil.SetPrecioMin (m.Id, precioMin);
                         //Si está todo OK, paso al siguiente eslabón
                         Siguiente.Handle (m);
@@ -64,42 +64,47 @@ namespace Library
                     /// Si el parseo falla, por ejemplo si recibo una letra, captura la excepción y envia un mensaje al usuario
                     /// pidiendo que ingrese un valor valido de edad
                     /// </summary>
-                    catch(FormatException)
+                    catch (FormatException)
                     {
 
-                        await Respuesta.PedirAclaracion (m.Id);
-                        await Preguntar (m.Id);;
-
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
 
                     }
                     catch (NullReferenceException)
                     {
-                        await Respuesta.PedirAclaracion (m.Id);
-                       await Preguntar (m.Id);
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                       await Respuesta.ErrorPrecio(m.Id);
-                       await Preguntar (m.Id);
+                        await Respuesta.ErrorPrecio (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+
                     }
                 }
             }
 
             else
-                {
-                    Siguiente.Handle (m);
+            {
+                Siguiente.Handle (m);
 
-                }
-           
+            }
+
         }
         /// <summary>
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de PrecioMin.
         /// </summary>
-        public override async Task Preguntar (long id)
+        public override async Task Preguntar (long id, TipoPlataforma plat)
         {
             string pregunta = Respuesta.DefinirFrase (this);
-            await Respuesta.GenerarRespuesta (pregunta, id);
+            await Respuesta.GenerarRespuesta (pregunta, id, plat);
 
         }
 

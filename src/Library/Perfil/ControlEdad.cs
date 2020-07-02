@@ -43,7 +43,7 @@ namespace Library
                 if (!UsuariosPreguntados.Contains (m.Id))
                 {
                     UsuariosPreguntados.Add (m.Id);
-                    await Preguntar (m.Id);
+                    await Preguntar (m.Id,m.Plataforma);
                 }
                 else
                 {
@@ -65,12 +65,18 @@ namespace Library
                     catch(FormatException)
                     {
 
-                        await Respuesta.PedirAclaracion (m.Id);
-                        await Preguntar (m.Id);
+                        await Respuesta.PedirAclaracion (m.Id,m.Plataforma);
+                        await Preguntar (m.Id,m.Plataforma);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        await Respuesta.ErrorEdad(m.Id);
+                        await Respuesta.ErrorEdad(m.Id,m.Plataforma);
+
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id,m.Plataforma);
+                        await Preguntar (m.Id,m.Plataforma);
 
                     }
                     
@@ -86,10 +92,10 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un valor de Edad.
         /// </summary>
-        public override async Task Preguntar (long id)
+        public override async Task Preguntar (long id  ,TipoPlataforma plat)
         {
             string pregunta = Respuesta.DefinirFrase (this);
-           await Respuesta.GenerarRespuesta (pregunta, id);
+           await Respuesta.GenerarRespuesta (pregunta, id , plat);
 
         }
 

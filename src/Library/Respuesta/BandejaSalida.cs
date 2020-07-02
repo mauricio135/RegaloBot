@@ -13,20 +13,13 @@ namespace Library
         /// <returns></returns>
         public static async Task EnviarMensaje (MensajeSalida mensaje)
         {
-           await mensaje.EnviarTexto ();
+            await mensaje.EnviarTexto ();
 
-           
         }
-        public static async Task EnviarGif (MensajeSalida mensaje ,string UrlGif)
-        {           
-            if (mensaje.Id != 0)
-            {
-                MensajeSalidaTelegram men;
-                men = (MensajeSalidaTelegram) mensaje;
-               await men.EnviarGif (UrlGif);
+        public static async Task EnviarReaccion (MensajeSalida mensaje)
+        {
 
-            }
-          
+            await mensaje.EnviarReaccion ();
 
         }
 

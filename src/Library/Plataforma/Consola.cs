@@ -16,7 +16,7 @@ namespace Library
 
             while (recibido != "quit")
             {
-                await Plataforma.RecibirMensaje (recibido, 0);
+                await Plataforma.RecibirMensaje (recibido, 0 , TipoPlataforma.Consola);
                 recibido = Console.ReadLine ();
 
             }

@@ -87,7 +87,7 @@ namespace Telegram.Bot.Examples.Echo
         private static async Task HandleMessageReceived (Message message)
         {
             Console.WriteLine ($"Received a message from {message.From.FirstName} saying: {message.Text}");
-            await Plataforma.RecibirMensaje (message.Text, message.Chat.Id);
+            await Plataforma.RecibirMensaje (message.Text, message.Chat.Id ,TipoPlataforma.Telegram);
         }
 
         public static async Task Contestar (long id, string respuesta)

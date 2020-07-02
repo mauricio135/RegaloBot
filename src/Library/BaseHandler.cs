@@ -18,7 +18,7 @@ namespace Library
                 this.Siguiente.Handle(m);
             }
         }
-        public abstract Task Preguntar(long id);
+        public abstract Task Preguntar(long id, TipoPlataforma plataforma);
         
     }
 }

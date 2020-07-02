@@ -5,9 +5,9 @@ namespace Library
 {
     public class ImpresoraRegalo
     {
-        public static async Task EnviarRegalo (Regalo regalo, long idPerfil)
+        public static async Task EnviarRegalo (Regalo regalo, long idPerfil ,TipoPlataforma plat)
         {
-           await Respuesta.EnviaRegalo(regalo.ToString(), idPerfil);
+           await Respuesta.EnviaRegalo(regalo.ToString(), idPerfil , plat);
             Console.WriteLine(regalo.ToString());
         }
     }

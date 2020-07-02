@@ -36,18 +36,18 @@ namespace Library
         {
             try
             {                
-            await this.BuscarRegalo(m.Id);            
-            await this.Preguntar(m.Id);
+            await this.BuscarRegalo(m.Id , m.Plataforma);            
+            await this.Preguntar(m.Id,m.Plataforma);
             }   
             catch (NullReferenceException)
             {
-                Respuesta.ErrorApi(m.Id);
+                Respuesta.ErrorApi(m.Id,m.Plataforma);
 
             }         
         }
     
 
-        public async Task BuscarRegalo (long idPerfil)
+        public async Task BuscarRegalo (long idPerfil , TipoPlataforma plat)
         {
             int precioMin = BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMin;
             int precioMax = BibliotecaPerfiles.GetUsuario(idPerfil).PrecioMax;
@@ -58,16 +58,16 @@ namespace Library
                 List<Regalo> resultados = this.procesadorSugerencias.ProcesarRegalos(regalos, precioMin, precioMax);
                 foreach (Regalo resultado in resultados)
                 {
-                    await ImpresoraRegalo.EnviarRegalo(resultado, idPerfil);
+                    await ImpresoraRegalo.EnviarRegalo(resultado, idPerfil, plat);
                 } 
             }
             
         }
 
-        public override async Task Preguntar (long id)
+        public override async Task Preguntar (long id ,TipoPlataforma plat)
         {
             string pregunta = Respuesta.DefinirFrase (this);
-            await Respuesta.GenerarRespuesta (pregunta, id);
+            await Respuesta.GenerarRespuesta (pregunta, id,plat);
 
         }
     }

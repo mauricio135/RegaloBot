@@ -23,7 +23,7 @@ namespace Library
             this.contenido = cont;
         }
         public abstract Task EnviarTexto();
-        public  abstract  Task EnviarImagen(string ruta);
+        public abstract Task EnviarReaccion();
        
 
     }

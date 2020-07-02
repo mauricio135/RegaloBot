@@ -13,16 +13,17 @@ namespace Library
 
         }
 
-        public override Task EnviarImagen(string ruta)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Task EnviarTexto ()
         {
             Console.WriteLine (this.Contenido);
             return Task.CompletedTask;
 
         }
+        public override Task EnviarReaccion ()
+        {
+            Console.WriteLine("No lo sé Rick, parece falso...");
+            return Task.CompletedTask;
+        }
+
     }
 }
