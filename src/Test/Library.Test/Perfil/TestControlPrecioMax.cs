@@ -12,38 +12,44 @@ namespace Library.Test.Perfil
             Library.BibliotecaPerfiles biblioteca = Library.BibliotecaPerfiles.Instance;
             biblioteca.CrearUsuario(0);
             Mensaje mensaje = new Mensaje("stub", 0,TipoPlataforma.Consola);
-            ControlEdadStub control = new ControlEdadStub();
-            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.Edad = true;
-
+            ControlPrecioMaxStub control = new ControlPrecioMaxStub();
+            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.PrecioMax = true;
+            
             control.Handle(mensaje);
 
             Assert.Throws<FormatException>(() => Int32.Parse(mensaje.Contenido));
         }
 
         [Test]
-        public void EdadNegativaLanzaExcepcion()
+        public void PrecioMaxNegativoLanzaExcepcion()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => EditorPerfil.SetEdad (0, -21));
+            BibliotecaPerfiles perfil = BibliotecaPerfiles.Instance;
+            perfil.CrearUsuario(0);
+            Assert.Throws<ArgumentOutOfRangeException>(() => EditorPerfil.SetPrecioMax (0, -21));
         }
 
         [Test]
-        public void EdadMuyGrandeLanzaExcepcion()
+        public void PrecioMaxMenorQuePrecioMinLanzaExcepcion()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => EditorPerfil.SetEdad (0, 300));
+            BibliotecaPerfiles perfil = BibliotecaPerfiles.Instance;
+            perfil.CrearUsuario(0);
+            BibliotecaPerfiles.GetUsuario(0).PrecioMin = 500;
+            Assert.Throws<ArgumentOutOfRangeException>(() => EditorPerfil.SetPrecioMax (0, 300));
+
         }
 
         [Test]
-        public void SiTodoOKSeteaEdad()
+        public void SiPrecioMaxCorrectoSeteaPerfil()
         {
             Library.BibliotecaPerfiles biblioteca = Library.BibliotecaPerfiles.Instance;
             biblioteca.CrearUsuario(0);
             Mensaje mensaje = new Mensaje("25", 0,TipoPlataforma.Consola);
-            ControlEdadStub control = new ControlEdadStub();
-            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.Edad = true;
+            ControlPrecioMaxStub control = new ControlPrecioMaxStub();
+            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.PrecioMax = true;
 
             control.Handle(mensaje);
 
-            Assert.AreEqual(BibliotecaPerfiles.GetUsuario(0).Edad,25);
+            Assert.AreEqual(BibliotecaPerfiles.GetUsuario(0).PrecioMax,25);
 
         }
         
@@ -53,16 +59,16 @@ namespace Library.Test.Perfil
             Library.BibliotecaPerfiles biblioteca = Library.BibliotecaPerfiles.Instance;
             biblioteca.CrearUsuario(0);
             Mensaje mensaje = new Mensaje("25", 0,TipoPlataforma.Consola);
-            ControlEdadStub control = new ControlEdadStub();
-            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.Edad = true;
+            ControlPrecioMaxStub control = new ControlPrecioMaxStub();
+            BibliotecaPerfiles.GetUsuario(0).RegistroPreguntas.PrecioMax = true;
 
             control.Handle(mensaje);
+
+            Assert.AreEqual(BibliotecaPerfiles.GetUsuario(0).PrecioMax,25);
 
             Assert.IsTrue(control.passed);
 
         }
-
-
 
     }
 }
