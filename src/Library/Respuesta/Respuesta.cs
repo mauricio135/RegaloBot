@@ -76,7 +76,7 @@ namespace Library
             await GenerarRespuesta ("La edad debe ser un número entre 0 y 120", id, plataforma);
         }
 
-        public static async Task ErrorPrecio (long id, TipoPlataforma plataforma)
+        public static async Task ErrorPrecioMin (long id, TipoPlataforma plataforma)
         {
             await GenerarRespuesta ("El precio debe ser un valor positivo", id, plataforma);
         }

@@ -1,1 +1,7 @@
 # RegaloBot
+Este es Bot Interactivo llamado *nombre* el cual a traves de una serie de datos brindados por el usuario realiza la busqueda en mercado libre aplicando filtros para recomendarte que le podrias regalar a una persona.
+Desde que el bot se inicia cualquier persona que utilice la plataforma Telegram y/o consola podrá comunicarse con él, este mismo tendra una interaccion de preguntas y respuestas con el usuario para poder definirle el mejor regalo.
+Tambien teniamos pensado utilizar TextAnalitics de Azure para obtener del usuario ciertas palabras claves en una frase y no tener la necesidad de hacerle una pregunta si ya nos habria brindado ese dato asi no era tan repetitivo, pero al final terminamos decidiendo por una serie de preguntas en un orden especifico(edad,genero,relacion,interes,preciomaximo,preciominimo) ya que nos pareció más organizado y por temas de tiempo estaba más a nuestro alcance .
+Utilizamos MLscrapper para buscar en las tendencias y recomendar las cosas que más se buscan en ML si el interes que la persona ingresa no se encuentra en Mercado libre.
+Este bot utiliza archivos que contienen todas las interacciones/Preguntas al usuario (Busqueda,Despedida,Edad,Genero,Intereses,NoEntendi,PrecioMax,PrecioMin,Relacion,Saludo) los cuales son totalmente configurables en cualquier momento.
+Al interactuar con el usuario si este mismo ingresa palabras las cuales no se pueden entender o imagenes,gif,archivos,etc le pedira una aclaración y le enviara un gif.
