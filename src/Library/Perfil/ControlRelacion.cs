@@ -13,7 +13,9 @@ namespace Library
         private static List<string> muyCercano = new List<string> ()
         {
             "padre",
+            "papá",
             "madre",
+            "mamá",
             "hermano",
             "hermana",
             "hijo",
