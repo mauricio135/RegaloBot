@@ -79,7 +79,7 @@ namespace Library
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        await Respuesta.ErrorPrecio (m.Id, m.Plataforma);
+                        await Respuesta.ErrorPrecioMin (m.Id, m.Plataforma);
                         await Preguntar (m.Id, m.Plataforma);
                     }
                     catch (ArgumentNullException)
