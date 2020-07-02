@@ -67,38 +67,45 @@ namespace Library
         /// <param name="m">Mensaje que se transmite por patrón COR</param>
         public override async void Handle (Mensaje m)
         {
-            if (BibliotecaPerfiles.GetUsuario (m.Id).Genero == TipoGenero.Vacio)
+             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            if (perfil.Genero == TipoGenero.Vacio)
             {
-                if (!UsuariosPreguntados.Contains (m.Id))
+                if (!perfil.RegistroPreguntas.Genero)
                 {
-                    UsuariosPreguntados.Add (m.Id);
-                   await Preguntar (m.Id);
+                    perfil.RegistroPreguntas.Genero = true;
+                    await Preguntar (m.Id, m.Plataforma);
                 }
                 else
                 {
                     try
                     {
-                    TipoGenero genero;
-                    if (masculino.Contains (m.Contenido))
-                    {
-                        genero = TipoGenero.Masculino;
-                    }
-                    else if (femenino.Contains (m.Contenido.ToLower()))
-                    {
-                        genero = TipoGenero.Femenino;
-                    }
-                    else
-                    {
-                        genero = TipoGenero.Indefinido;
-                    }
+                        TipoGenero genero;
+                        if (masculino.Contains (m.Contenido))
+                        {
+                            genero = TipoGenero.Masculino;
+                        }
+                        else if (femenino.Contains (m.Contenido.ToLower ()))
+                        {
+                            genero = TipoGenero.Femenino;
+                        }
+                        else
+                        {
+                            genero = TipoGenero.Indefinido;
+                        }
 
-                    EditorPerfil.SetGenero (m.Id, genero);
-                    Siguiente.Handle (m);
+                        EditorPerfil.SetGenero (m.Id, genero);
+                        Siguiente.Handle (m);
                     }
                     catch (NullReferenceException)
                     {
-                        await Respuesta.PedirAclaracion (m.Id);
-                        await Preguntar (m.Id);;
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        await Respuesta.PedirAclaracion (m.Id, m.Plataforma);
+                        await Preguntar (m.Id, m.Plataforma);
+
                     }
                 }
             }
@@ -111,12 +118,12 @@ namespace Library
         /// Método que se encarga de trasladar a la clase encargada de enviar mensajes al usuario el
         /// pedido por un tipo de género.
         /// </summary>
-        public override async Task Preguntar (long id)
+        public override async Task Preguntar (long id, TipoPlataforma plat)
         {
-            
-            string pregunta = Respuesta.DefinirFrase (this);  
-            await Respuesta.GenerarRespuesta (pregunta, id);                      
-            await TelegramAPI.SendReplyKeyboard(id);
+
+            string pregunta = Respuesta.DefinirFrase (this);
+            await Respuesta.GenerarRespuesta (pregunta, id, plat);
+            //  await TelegramAPI.SendReplyKeyboard(id);
 
         }
 

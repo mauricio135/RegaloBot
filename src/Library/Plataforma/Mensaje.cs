@@ -4,6 +4,7 @@ namespace Library
     {
         private string contenido;
         private long id;
+        private TipoPlataforma plataforma;
         public string Contenido 
         {
             get => contenido;
@@ -15,11 +16,17 @@ namespace Library
             get => id;
             set => id = value;
         }
+        public TipoPlataforma Plataforma
+        {
+            get => plataforma;
+            set => plataforma = value;
+        }
 
-        public Mensaje (string cont, long num)
+        public Mensaje (string cont, long num ,TipoPlataforma plat)
         {
             this.contenido = cont;
             this.id = num;
+            this.plataforma = plat;
         }
     }
 }

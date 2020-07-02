@@ -2,10 +2,10 @@
 using Library;
 namespace Library.Test.Perfil
 {
-    internal class ControlEdadStub: ControlEdad
+    internal class ControlPrecioMaxStub: ControlPrecioMax
     {
         public bool passed = false;
-        public ControlEdadStub()
+        public ControlPrecioMaxStub()
         {
             this.Siguiente = new HandlerStub(SetPassed);
         }

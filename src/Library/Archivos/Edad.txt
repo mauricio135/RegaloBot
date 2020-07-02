@@ -1,0 +1,6 @@
+Por favor ingrese la edad de la persona a la cual le va a buscar un regalo.
+Cual es la edad de la persona.
+¿Cuantos años tiene?.
+Ingrese la edad de la persona.
+¿Cuántos años tiene?
+¿Cuántos años cumplidos tiene?

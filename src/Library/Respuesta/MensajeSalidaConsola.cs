@@ -6,16 +6,10 @@ namespace Library
 {
     public class MensajeSalidaConsola : MensajeSalida
     {
-        private string imagen;
 
         public MensajeSalidaConsola (string cont, long num) : base (cont, num)
         {
 
-        }
-
-        public override Task EnviarImagen(string ruta)
-        {
-            throw new NotImplementedException();
         }
 
         public override Task EnviarTexto ()
@@ -24,5 +18,11 @@ namespace Library
             return Task.CompletedTask;
 
         }
+        public override Task EnviarReaccion ()
+        {
+            Console.WriteLine ("No lo sé Rick, parece falso...");
+            return Task.CompletedTask;
+        }
+
     }
 }

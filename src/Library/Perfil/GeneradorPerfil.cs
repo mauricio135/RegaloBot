@@ -21,8 +21,8 @@ namespace Library
             {
                 deposito.CrearUsuario(mensaje.Id);
 
-                string pregunta = "Hola! Gracias por escribirnos,nos sentiamos muys solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial";
-                await Respuesta.GenerarRespuesta(pregunta,mensaje.Id);
+                string pregunta = Respuesta.DefinirFrase("saludo");
+                await Respuesta.GenerarRespuesta(pregunta,mensaje.Id,mensaje.Plataforma);
             }
                
             handler.Handle(mensaje);
