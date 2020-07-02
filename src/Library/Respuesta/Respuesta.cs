@@ -26,7 +26,7 @@ namespace Library
 
         }
 
-        public static async void ErrorApi (long id, TipoPlataforma plataforma)
+        public static async Task ErrorApi (long id, TipoPlataforma plataforma)
         {
             string respuesta = "Oh no!, Se cayó Mercado Libre!";
 
@@ -35,7 +35,16 @@ namespace Library
             await BandejaSalida.EnviarMensaje (mensaje);
 
         }
-        public static async void Reaccion (MensajeSalida mensaje)
+        public static async Task ErrorResultado (long id, TipoPlataforma plataforma)
+        {
+            string respuesta = "No hay resultados por aquí...";
+
+            MensajeSalida mensaje = SelectorPlataforma.CrearMensajeSalida (respuesta, id, plataforma);
+
+            await BandejaSalida.EnviarMensaje (mensaje);
+
+        }
+        public static async Task Reaccion (MensajeSalida mensaje)
         {
             await BandejaSalida.EnviarReaccion (mensaje);
 

@@ -62,7 +62,6 @@ namespace Telegram.Bot.Examples.Echo
             }
             catch (Exception e)
             {
-                    Console.WriteLine("error : no mensaje");
                 await HandleErrorAsync (e, cancellationToken);
             }
         }
@@ -96,32 +95,7 @@ namespace Telegram.Bot.Examples.Echo
             await Bot.SendTextMessageAsync (id, respuesta, ParseMode.Default);
 
         }
-        public static async Task Contestar2 (long id, string respuesta)
-        {
-
-            
-
-
-            InputMediaPhoto a = new InputMediaPhoto(@"https://www.cleanipedia.com/images/v2/29f824ebf30631a153ce6bb01480bb39-1800w-1200h.webp"); 
-            
-            InputMediaPhoto b = new InputMediaPhoto(@"https://www.cleanipedia.com/images/v2/29f824ebf30631a153ce6bb01480bb39-1800w-1200h.webp"); 
-            InputMediaPhoto c = new InputMediaPhoto(@"https://www.cleanipedia.com/images/v2/29f824ebf30631a153ce6bb01480bb39-1800w-1200h.webp"); 
-           
-           //InputMediaPhoto[] media ;//= {a,b,c};
-           
-           
-
-           
-          /*  await Bot.SendMediaGroupAsync(id,new InputMediaPhoto[] 
-            { @"https://www.cleanipedia.com/images/v2/29f824ebf30631a153ce6bb01480bb39-1800w-1200h.webp" 
-            , @"https://www.cleanipedia.com/images/v2/29f824ebf30631a153ce6bb01480bb39-1800w-1200h.webp" 
-            }
-            );
-          */
-
-
-        }
-
+      
 
          public  static async Task SendInlineKeyboard(long id )
             {
@@ -179,19 +153,7 @@ namespace Telegram.Bot.Examples.Echo
 
         }
 
-        public static async Task EnviarFoto (long id, string ruta)
-        {
-            await Bot.SendChatActionAsync (id, ChatAction.UploadPhoto);
 
-            string filePath = ruta;
-            var fileStream = new FileStream (filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            var fileName = filePath.Split (Path.DirectorySeparatorChar).Last ();
-            await Bot.SendPhotoAsync (
-                chatId: id,
-                photo: new InputOnlineFile (fileStream, fileName),
-                caption: "te gusta?"
-            );
-        }
 
     }
 }
