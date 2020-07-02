@@ -1,4 +1,4 @@
-¿Que le interesa?
-Ingrese un interes de la persona a la cual va dirigido el regalo.
-Por favor ingrese un interes para facilitar la busqueda.
+¿Qué le interesa?
+Ingrese un interés de la persona a la cual le va a regalar algo
+Por favor ingrese un interés para facilitar la búsqueda
 ¿Qué le gusta a esa persona?

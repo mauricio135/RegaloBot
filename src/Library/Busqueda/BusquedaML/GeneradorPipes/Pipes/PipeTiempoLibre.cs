@@ -1,37 +1,86 @@
 using System;
 using System.Collections.Generic;
+using PII_MLApi;
+
 namespace Library
 {
     public class PipeTiempoLibre: PipeFinal
     {
-        private static List<string> categorias = new List<string> 
-        {"1276-deportes_y_fitness", "1144-consolas_y_videojuegos",
-        "1039-camaras_y_accesorios", "1132-juegos_y_juguetes",
-        "442458-libros__revistas_y_comics", "1168-musica_y_peliculas"};
+
+        private static List<string> indefinido = new List<string> 
+        {
+            "1285-futbol",  "3697-auriculares", "377642-ukeleles",
+            "2987-guitarras", "3004-baterias_y_percusion", "6159-juegos_de_salon"
+
+        };
+        private static List<string> infancia = new List<string>
+        {
+            "1132-juegos_y_juguetes", "1153-electronicos_para_ninos", "433060-casas_y_carpas_para_ninos", "1166-peluches"
+        };
+        private static List<string> adulto = new List<string>
+        {
+            "65829-aparatos_de_musculacion", "432988-juegos_de_mesa_y_cartas", "110944-juguetes_antiestres_e_ingenio",
+            "1174-musica", "1799-historietas_y_comics"
+
+        };
+        private static List<string> masculino = new List<string> 
+        {
+            "1144-consolas_y_videojuegos", "433624-tablets_y_accesorios"
+        };
+        private static List<string> femenino = new List<string> 
+        {
+            "206291-funcional__pilates_y_yoga", 
+
+        };
         public PipeTiempoLibre()
         {
             var random = new Random();
-            int indice = random.Next(categorias.Count);
-            this.categoria = categorias[indice];
+            int indice = random.Next(indefinido.Count);
+            this.categoria = indefinido[indice];
         }
         public override string Filtrar(Perfil persona)
         {
-            if (persona.Edad < 10)
+            List<string> posibles = new List<string>();
+            foreach (string link in indefinido)
             {
-                return "1132-juegos_y_juguetes";
+                posibles.Add(link);
             }
-            else if (persona.Edad < 20 && persona.Genero == TipoGenero.Masculino)
+            if (persona.Genero == TipoGenero.Masculino)
             {
-                return "1144-consolas_y_videojuegos";
+                foreach (string link in masculino)
+                {
+                    posibles.Add(link);
+                }
             }
-            else if (persona.Edad < 20 && persona.Genero == TipoGenero.Femenino)
+            else if (persona.Genero == TipoGenero.Femenino)
             {
-                return "164597-articulos_escolares";
+                foreach (string link in femenino)
+                {
+                    posibles.Add(link);
+                }
+            }
+            if (persona.Edad < 12)
+            {
+                foreach (string link in infancia)
+                {
+                    posibles.Add(link);
+                }
             }
             else
             {
-                return "1276-deportes_y_fitness";
+                foreach (string link in adulto)
+                {
+                    posibles.Add(link);
+                }
             }
+            var random = new Random ();
+            int indiceCat = random.Next(posibles.Count);
+            this.categoria = posibles[indiceCat];
+
+            List<string> tendencias = MLApi.SearchTendencias(this.categoria);
+            
+            int indice = random.Next(tendencias.Count);
+            return tendencias[indice];
 
         }
     }
