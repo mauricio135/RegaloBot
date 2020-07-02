@@ -61,8 +61,5 @@ namespace Library.Test.Perfil
             Assert.IsTrue(control.passed);
 
         }
-
-
-
     }
 }
