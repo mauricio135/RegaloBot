@@ -80,7 +80,7 @@ namespace Library
                     try
                     {
                         TipoGenero genero;
-                        if (masculino.Contains (m.Contenido))
+                        if (masculino.Contains (m.Contenido.ToLower()))
                         {
                             genero = TipoGenero.Masculino;
                         }
