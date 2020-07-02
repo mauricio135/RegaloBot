@@ -47,7 +47,7 @@ namespace Library
         }
         public override async void Handle (Mensaje m)
         {
-             Perfil perfil = BibliotecaPerfiles.GetUsuario(m.Id);
+            Perfil perfil = BibliotecaPerfiles.GetUsuario (m.Id);
             if (!perfil.RegistroPreguntas.Busqueda)
             {
                 await EjecutarBusqueda (m.Id, m.Plataforma);
@@ -56,14 +56,14 @@ namespace Library
             }
             else
             {
-                if (afirmativo.Contains (m.Contenido.ToLower()))
+                if (afirmativo.Contains (m.Contenido.ToLower ()))
                 {
                     Siguiente.Handle (m);
 
                 }
                 else
                 {
-                   await EjecutarBusqueda (m.Id, m.Plataforma);
+                    await EjecutarBusqueda (m.Id, m.Plataforma);
                 }
 
             }
@@ -85,8 +85,29 @@ namespace Library
 
         public async Task BuscarRegalo (long idPerfil, TipoPlataforma plat)
         {
-            int precioMin = BibliotecaPerfiles.GetUsuario (idPerfil).PrecioMin;
-            int precioMax = BibliotecaPerfiles.GetUsuario (idPerfil).PrecioMax;
+            Perfil perfil = BibliotecaPerfiles.GetUsuario (idPerfil);
+
+            int precioMin = perfil.PrecioMin;
+            int precioMax = perfil.PrecioMax;
+            string interes = perfil.Interes;
+
+            if (interes != null)
+            {
+                List<Regalo> regalos = tienda.BuscarRegalo (interes);
+                try
+                {
+                    Regalo resultado = this.procesadorSugerencias.ProcesarRegalos (regalos, precioMin, precioMax);
+
+                    await ImpresoraRegalo.EnviarRegalo (resultado, idPerfil, plat);
+                }
+                catch
+                {
+                    await Respuesta.ErrorResultado (idPerfil, plat);
+
+                }
+
+            }
+
             for (int i = 0; i < 3; i++)
             {
                 string regaloSugerido = generadorRegalo.SugerenciaRegalo (idPerfil);
