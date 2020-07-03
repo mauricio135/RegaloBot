@@ -2,8 +2,14 @@ using System;
 using System.Collections.Generic;
 namespace Library
 {
+    /// <summary>
+    /// Pipe inicial que toma en cuenta las características personales del perfil para decidir a qué Pipe enviarlo luego
+    /// </summary>
     public class PipeInicial: PipeCondicional
     {
+        /// <summary>
+        ///  Por Creator, PipeInicial crea instancias de los Pipes siguientes, ya que los contiene
+        /// </summary>
         public PipeInicial()
         {
             PipeBebe bebe =  new PipeBebe();
@@ -18,6 +24,11 @@ namespace Library
 
             this.caminos = siguientes;
         }
+        /// <summary>
+        /// Tomando en cuenta la edad de la persona, se decanta por uno de los Pipes siguientes
+        /// </summary>
+        /// <param name="persona">Persona a quien se busca el regalo</param>
+        /// <returns></returns>
         public override string Filtrar(Perfil persona)
         {
             if (persona.Edad < 2)

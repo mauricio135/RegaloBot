@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
+    /// <summary>
+    /// Último eslabón de la cadena de COR
+    /// </summary>
     public class Despedida : BaseHandler
     {
         public override async void Handle (Mensaje m)

@@ -2,12 +2,9 @@ using System.Collections.Generic;
 
 namespace Library
 {
-    public class PipeCondicional : IPipe
+    public abstract class PipeCondicional : IPipe
     {
         protected List<IPipe> caminos;
-        public virtual string Filtrar(Perfil persona)
-        {
-            return "";
-        }
+        public abstract string Filtrar(Perfil persona);
     }
 }

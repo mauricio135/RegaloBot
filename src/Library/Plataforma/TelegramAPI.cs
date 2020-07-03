@@ -38,14 +38,11 @@ namespace Telegram.Bot.Examples.Echo
             );
 
             Console.WriteLine ($"Bot iniciado");
-            // Esperamos a que el usuario aprete Enter en la consola para terminar el bot.
-            //Console.ReadLine();
         }
 
         /// <summary>
         /// Maneja las actualizaciones del bot (todo lo que llega), incluyendo
-        /// mensajes, ediciones de mensajes, respuestas a botones, etc. En este
-        /// ejemplo sólo manejamos mensajes de texto.
+        /// mensajes, ediciones de mensajes, respuestas a botones, etc. 
         /// </summary>
         /// <param name="update"></param>
         /// <param name="cancellationToken"></param>
@@ -68,7 +65,6 @@ namespace Telegram.Bot.Examples.Echo
 
         /// <summary>
         /// Manejo de excepciones. 
-        /// Por ahora simplemente la imprimimos en la consola.
         /// </summary>
         /// <param name="exception"></param>
         /// <param name="cancellationToken"></param>
@@ -88,69 +84,27 @@ namespace Telegram.Bot.Examples.Echo
             Console.WriteLine ($"Received a message from {message.From.FirstName} saying: {message.Text}");
             await Plataforma.RecibirMensaje (message.Text, message.Chat.Id ,TipoPlataforma.Telegram);
         }
-
+        /// <summary>
+        /// Método que envía un mensaje mediante Telegram
+        /// </summary>
+        /// <param name="id">Identificador de la conversación</param>
+        /// <param name="respuesta">Contenido de la respuesta</param>
+        /// <returns></returns>
         public static async Task Contestar (long id, string respuesta)
         {
 
             await Bot.SendTextMessageAsync (id, respuesta, ParseMode.Default);
 
         }
-      
-
-         public  static async Task SendInlineKeyboard(long id )
-            {
-                await Bot.SendChatActionAsync(id, ChatAction.Typing);
-
-                // Simulate longer running task
-                await Task.Delay(500);
-
-                var inlineKeyboard = new InlineKeyboardMarkup(new[]
-                {
-                    // first row
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData("1.1", "11"),
-                        InlineKeyboardButton.WithCallbackData("1.2", "12"),
-                    },
-                    // second row
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData("2.1", "21"),
-                        InlineKeyboardButton.WithCallbackData("2.2", "22"),
-                    }
-                });
-                await Bot.SendTextMessageAsync(
-                    chatId: id,
-                    text: "Choose",
-                    replyMarkup: inlineKeyboard
-                );
-            }
-
-           public static async Task SendReplyKeyboard(long id)
-            {
-                var replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                    new KeyboardButton[][]
-                    {
-                        new KeyboardButton[] { "Hombre", "Mujer" },
-                        new KeyboardButton[] { "No te interesa" },
-                    },
-                    resizeKeyboard: true
-                );
-                   await Bot.SendTextMessageAsync(
-                    chatId: id,
-                    text: "Por favor selecciona una opción",
-                    replyMarkup: replyKeyboardMarkup
-
-                );
-            }
-
-
-
+        /// <summary>
+        /// Método que envía GIFs mediante Telegram
+        /// </summary>
+        /// <param name="id">Identificador de la conversación</param>
+        /// <param name="gif">URL del link (provenientes de GIPHY.COM)</param>
+        /// <returns></returns>
         public static async Task EnviarGif (long id, string gif)
         {
-
             await Bot.SendAnimationAsync (id, gif);
-
         }
 
 

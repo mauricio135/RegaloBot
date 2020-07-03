@@ -60,6 +60,10 @@ namespace Library
             Perfil nuevoUsuario = new Perfil (idNuevo);
             lista.Add (nuevoUsuario);
         }
+        /// <summary>
+        /// Se elimina un Perfil almacenado en la Biblioteca
+        /// </summary>
+        /// <param name="id">Número identificador del Perfil</param>
         public static void EliminarUsuario (long id)
         {
             lista.Remove (GetUsuario (id));

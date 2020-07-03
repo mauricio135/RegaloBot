@@ -10,6 +10,13 @@ namespace Library
     /// </summary>
     public class ControlPrecioMax : BaseHandler
     {
+        /// <summary>
+        /// Para implementar la búsqueda mediante MercadoLibre y procesar los resultados como deseamos,
+        /// decidimos aplicar el patrón Builder, para evitar el acoplamiento innecesario de esta clase
+        /// con las clases componentes de Busqueda. Además, el Director aplicado aquí puede modificarse
+        /// para cambiar alguno de los componentes sin necesidad de hacer cambios en esta clase, por lo que 
+        /// quedaría abiero a la extensión y cerrado a la modificación.
+        /// </summary>
 
         public ControlPrecioMax ()
         {

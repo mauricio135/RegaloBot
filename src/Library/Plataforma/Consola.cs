@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-
+    /// <summary>
+    /// Clase que provee la comunicación con el bot mediante consola
+    /// </summary>
     public class Consola
     {
         public static async Task<string> IniciarConsolaAsync ()
         {
 
-             string recibido = Console.ReadLine ();
-            //Task<string> recibi = ReadlineAsync ();
-           // string recibido = await recibi;
+            string recibido = Console.ReadLine ();
 
             while (recibido != "quit")
             {
@@ -22,11 +22,5 @@ namespace Library
             }
             return recibido;
         }
-     /*   public static Task<string> ReadlineAsync ()
-        {
-            return Task.Run (() => Console.ReadLine ());
-
-        }
-*/
     }
 }

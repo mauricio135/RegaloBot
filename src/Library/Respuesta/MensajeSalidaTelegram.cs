@@ -10,6 +10,11 @@ namespace Library
     /// </summary>
     public class MensajeSalidaTelegram : MensajeSalida
     {
+        /// <summary>
+        /// Listado de links que contienen GIFs para enviar mediante Telegram
+        /// </summary>
+        /// <typeparam name="string"></typeparam>
+        /// <returns></returns>
         private static List<string> confusion = new List<string> ()
         {
 
@@ -23,27 +28,31 @@ namespace Library
             "https://media.giphy.com/media/QE8hREXIgRXeo/giphy.gif",
             "https://media.giphy.com/media/E2WEi5K1QzPxK/giphy.gif",
             "https://media.giphy.com/media/xL7PDV9frcudO/giphy.gif",
-            "https://media.giphy.com/media/1X7lCRp8iE0yrdZvwd/giphy.gif"
-
+            "https://media.giphy.com/media/1X7lCRp8iE0yrdZvwd/giphy.gif",
+            "https://media.giphy.com/media/SxgTcq5TT93mo/giphy.gif",
+            "https://media.giphy.com/media/91fEJqgdsnu4E/giphy.gif",
+            "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif",
         };
-        private string imagen;
 
         public MensajeSalidaTelegram (string cont, long num) : base (cont, num)
         {
 
         }
-
-        public string Imagen
-        {
-            get => imagen;
-            set => imagen = value;
-        }
+        /// <summary>
+        /// Aplicando polimorfismo, EnviarTexto para MensajeSalidaTelegram aplica su propio método para comunicarse
+        /// mediante esta plataforma
+        /// </summary>
+        /// <returns></returns>
         public async override Task EnviarTexto ()
         {
             await TelegramAPI.Contestar (this.Id, this.Contenido);
 
         }
-
+        /// <summary>
+        /// Aplicando polimorfismo, EnviarReaccion para MensajeSalidaTelegram aplica su propio método para comunicarse
+        /// mediante esta plataforma
+        /// </summary>
+        /// <returns></returns>
         public override async Task EnviarReaccion ()
         {
             string url;

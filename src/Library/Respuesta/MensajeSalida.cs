@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
+    /// <summary>
+    /// Clase abstracta que representa los mensajes que envía el bot hacia el usuario 
+    /// </summary>
     public abstract class MensajeSalida
     {
         private string contenido;

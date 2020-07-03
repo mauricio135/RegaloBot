@@ -1,5 +1,8 @@
 namespace Library
 {
+    /// <summary>
+    /// Interfaz necesaria para aplicar el patrón de diseño Builder sobre la clase Busqueda
+    /// </summary>
     public interface ITiendaBuilder
     {
         void SetGenerador(IGeneradorRegalo generador);

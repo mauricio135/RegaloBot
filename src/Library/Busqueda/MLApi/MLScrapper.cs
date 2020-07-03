@@ -98,7 +98,11 @@ namespace PII_MLApi
 
             return results;
         }
-
+        /// <summary>
+        /// Parsea el HTML de la categoría seleccionada
+        /// </summary>
+        /// <param name="categoria">Código de la categoría</param>
+        /// <returns>Lista de tendencias</returns>
         public virtual async Task<List<string>> ScrapeTendencias(string categoria)
         {
             this.url = $"https://tendencias.mercadolibre.com.uy/{categoria}";

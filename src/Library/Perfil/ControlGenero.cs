@@ -123,7 +123,6 @@ namespace Library
 
             string pregunta = Respuesta.DefinirFrase (this);
             await Respuesta.GenerarRespuesta (pregunta, id, plat);
-            //  await TelegramAPI.SendReplyKeyboard(id);
 
         }
 

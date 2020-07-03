@@ -11,6 +11,10 @@ namespace Library
         private string interes;
         private int precioMin = -1;
         private int precioMax = -1;
+        /// <summary>
+        /// Por patrón Creator, Perfil crea un objeto de la clase RegistroPreguntas porque contiene una instancia de esta 
+        /// </summary>
+        /// <returns></returns>
         private RegistroPreguntas preguntas = new RegistroPreguntas ();
         public long Id
         {

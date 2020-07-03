@@ -5,8 +5,19 @@ using System.IO;
 
 namespace Library
 {
+    /// <summary>
+    /// Clase que maneja las respuestas enviadas hacia el usuario
+    /// </summary>
     public class Respuesta
     {
+        /// <summary>
+        /// Método que genera la respuesta hacia el usuario. Se utiliza Delegación para la creación de la instancia
+        /// de MensajeSalida, y para el envío mediante la plataforma
+        /// </summary>
+        /// <param name="contenido">Contenido del mensaje</param>
+        /// <param name="id">Identificador de la conversación</param>
+        /// <param name="plataforma">Plataforma por la que se debe enviar el mensaje</param>
+        /// <returns></returns>
 
         public static async Task GenerarRespuesta (string contenido, long id, TipoPlataforma plataforma)
         {
@@ -16,12 +27,18 @@ namespace Library
             await BandejaSalida.EnviarMensaje (mensaje);
 
         }
+        /// <summary>
+        /// Método que pide una aclacración al usuario. Delega la responsabilidad de leer el archivo
+        /// </summary>
+        /// <param name="id">Identificador de la conversación</param>
+        /// <param name="plataforma">Plataforma por la cual se debe enviar el mensaje</param>
+        /// <returns></returns>
         public static async Task PedirAclaracion (long id, TipoPlataforma plataforma)
         {
-            string respuesta="Ups, no te entendí, puedes volver a responder?";
+            string respuesta="Ups, no te entendí, ¿puedes volver a responder?";
             try
             {
-            respuesta = leerarchivo.Leer("NoEntendi");
+            respuesta = LeerArchivo.Leer("NoEntendi");
             }
             catch(DirectoryNotFoundException)
             {
@@ -38,6 +55,7 @@ namespace Library
            
 
         }
+
 
         public static async Task ErrorApi (long id, TipoPlataforma plataforma)
         {
@@ -57,6 +75,12 @@ namespace Library
             await BandejaSalida.EnviarMensaje (mensaje);
 
         }
+        /// <summary>
+        /// Por polimorfismo, no se conoce de antemano qué implementación del método se va a ejecutar,
+        /// ya que las clases que heredan de MensajeSalida tienen distintas implementaciones de EnviarReaccion
+        /// </summary>
+        /// <param name="mensaje">Mensaje a enviar</param>
+        /// <returns></returns>
         public static async Task Reaccion (MensajeSalida mensaje)
         {
             await BandejaSalida.EnviarReaccion (mensaje);
@@ -85,13 +109,18 @@ namespace Library
             await GenerarRespuesta ("El precio máximo debe ser un valor positivo y no puede ser menor al mínimo", id, plataforma);
         }
 
+        //A continuación se encuentran los métodos que cada Handler utiliza para comunicarse con el usuario. 
+        //Se utiliza sobrecarga, ya que cada uno tiene sus propios mensajes.
+
+        #region 
+
         public static string DefinirFrase (ControlEdad edad)
         {
             
             string respuesta = "Cuantos años tiene";
             try
             {
-            respuesta = leerarchivo.Leer("Edad");
+            respuesta = LeerArchivo.Leer("Edad");
             }
             catch(DirectoryNotFoundException)
             {
@@ -109,7 +138,7 @@ namespace Library
             string respuesta = "El regalo es para un Hombre o una Mujer?";
             try
             {
-            respuesta = leerarchivo.Leer("Genero");
+            respuesta = LeerArchivo.Leer("Genero");
             }
             catch(DirectoryNotFoundException)
             {
@@ -133,7 +162,7 @@ namespace Library
             string respuesta = "Cuales son sus Intereses? que le gusta??";
             try
             {
-            respuesta = leerarchivo.Leer("Intereses");
+            respuesta = LeerArchivo.Leer("Intereses");
             }
             catch(DirectoryNotFoundException)
             {
@@ -151,7 +180,7 @@ namespace Library
             string respuesta = "nos vemos ,Chau!";
             try
             {
-            respuesta = leerarchivo.Leer("Despedida");
+            respuesta = LeerArchivo.Leer("Despedida");
             }
             catch(DirectoryNotFoundException)
             {
@@ -170,7 +199,7 @@ namespace Library
             string respuesta = "Cual es tu relación con esta persona?";
             try
             {
-            respuesta = leerarchivo.Leer("Relacion");
+            respuesta = LeerArchivo.Leer("Relacion");
             }
             catch(DirectoryNotFoundException)
             {
@@ -188,7 +217,7 @@ namespace Library
             string respuesta = "Hola! Gracias por escribirnos,nos sentiamos muy solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial.";
             try
             {
-            respuesta = leerarchivo.Leer("Saludo");
+            respuesta = LeerArchivo.Leer("Saludo");
             }
             catch(DirectoryNotFoundException)
             {
@@ -205,7 +234,7 @@ namespace Library
             string respuesta = "Hola! Gracias por escribirnos,nos sentiamos muy solos :( \n Si nos permites vamos a hacerte algunas preguntas para Sugerirte el Mejor Regalo del Mundo Mundial.";
             try
             {
-            respuesta = leerarchivo.Leer("Saludo");
+            respuesta = LeerArchivo.Leer("Saludo");
             }
             catch(DirectoryNotFoundException)
             {
@@ -223,7 +252,7 @@ namespace Library
             string respuesta = "Estas conforme con las Sugerencias?";
             try
             {
-            respuesta = leerarchivo.Leer("Busqueda");
+            respuesta = LeerArchivo.Leer("Busqueda");
             }
             catch(DirectoryNotFoundException)
             {
@@ -241,7 +270,7 @@ namespace Library
             string respuesta = "Cual es el Precio Minimo que quieres Pagar?";
             try
             {
-            respuesta = leerarchivo.Leer("PrecioMin");
+            respuesta = LeerArchivo.Leer("PrecioMin");
             }
             catch(DirectoryNotFoundException)
             {
@@ -258,7 +287,7 @@ namespace Library
             string respuesta ="Cual es el Precio Máximo que puedes pagar por este regalo?";
             try
             {
-            respuesta = leerarchivo.Leer("PrecioMax");
+            respuesta = LeerArchivo.Leer("PrecioMax");
             }
             catch(DirectoryNotFoundException)
             {
@@ -271,6 +300,7 @@ namespace Library
             return respuesta;
             
         }
+        #endregion
 
     }
 }
