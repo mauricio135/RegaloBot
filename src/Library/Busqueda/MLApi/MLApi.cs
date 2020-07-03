@@ -32,6 +32,12 @@ namespace PII_MLApi
             return task.Result;
         }
 
+
+        /// <summary>
+        /// Ingresa a una sección de las tendencias de MercadoLibre y retorna la lista de búsquedas más populares de esta
+        /// </summary>
+        /// <param name="categoria">Código de la categoría de tendencias (encontrado al final de la URL)</param>
+        /// <returns>Lista de tendencias en la categoría</returns>
         public static List<string> SearchTendencias (string categoria)
         {
             var scraper = new MLScrapper(categoria);

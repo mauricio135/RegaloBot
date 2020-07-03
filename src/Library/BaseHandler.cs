@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 
 namespace Library
 {
+    /// <summary>
+    /// Clase abstracta de la que heredan los componentes del patrón Chain of Responsibility
+    /// </summary>
     public abstract class  BaseHandler: IHandler
     {
-        //Lista que contiene los números de ID a los que se ha consultado acerca de este parámetro.
-        //Se utiliza para controlar el flujo de COR.
         public IHandler Siguiente { get; set; }
 
         public virtual void Handle(Mensaje m)

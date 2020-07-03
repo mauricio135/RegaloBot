@@ -4,8 +4,15 @@ using System.Threading.Tasks;
 
 namespace Library
 {
+    /// <summary>
+    /// Eslabón de la cadena que hace efectiva la búsqueda en un portal determinado
+    /// </summary>
     public class Busqueda : BaseHandler
     {
+        /// <summary>
+        /// Listado de posibles respuestas afirmativas
+        /// </summary>
+        /// <value></value>
         private List<string> afirmativo = new List<string>
         {
             "si",
@@ -39,12 +46,19 @@ namespace Library
         {
             set => impresora = value;
         }
-
+        /// <summary>
+        /// Por patrón Creator, Busqueda crea una instancia de Despedida ya que la contiene
+        /// </summary>
         public Busqueda ()
         {
             this.Siguiente = new Despedida ();
 
         }
+        /// <summary>
+        /// Entrega los resultados de la búsqueda y verifica conformidad con los mismos
+        /// </summary>
+        /// <param name="m">Mensaje recibido desde Plataforma</param>
+        /// <returns></returns>
         public override async void Handle (Mensaje m)
         {
             Perfil perfil = BibliotecaPerfiles.GetUsuario (m.Id);
@@ -68,6 +82,12 @@ namespace Library
 
             }
         }
+        /// <summary>
+        /// Método que ejecuta la búsqueda según el Perfil dado y devuelve resultados al usuario
+        /// </summary>
+        /// <param name="id">Número identificador del Perfil</param>
+        /// <param name="plat">Plataforma a la que se envían los resultados</param>
+        /// <returns></returns>
         private async Task EjecutarBusqueda (long id, TipoPlataforma plat)
         {
             try
@@ -82,7 +102,12 @@ namespace Library
             }
 
         }
-
+        /// <summary>
+        /// Ejecuta la búsqueda de regalo según interés (si no es nulo) y devuelve tres sugerencias basadas en el perfil
+        /// </summary>
+        /// <param name="idPerfil">Número identificador del perfil</param>
+        /// <param name="plat">Plataforma a la que se debe enviar el mensaje</param>
+        /// <returns></returns>
         public async Task BuscarRegalo (long idPerfil, TipoPlataforma plat)
         {
             Perfil perfil = BibliotecaPerfiles.GetUsuario (idPerfil);
@@ -127,7 +152,12 @@ namespace Library
             }
 
         }
-
+        /// <summary>
+        /// Método que envía una pregunta al Usuario (en el caso de Busqueda, pregunta por la conformidad)
+        /// </summary>
+        /// <param name="id">Número identificador del perfil</param>
+        /// <param name="plat">Plataforma a la que se debe enviar el mensaje</param>
+        /// <returns></returns>
         public override async Task Preguntar (long id, TipoPlataforma plat)
         {
             string pregunta = Respuesta.DefinirFrase (this);

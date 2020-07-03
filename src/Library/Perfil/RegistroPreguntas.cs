@@ -1,5 +1,8 @@
 namespace Library
 {
+    /// <summary>
+    /// Por SRP, la única razón de cambio de esta clase es que se modifiquen las preguntas a realizar a Perfil
+    /// </summary>
     public class RegistroPreguntas
     {
         private bool edad = false;

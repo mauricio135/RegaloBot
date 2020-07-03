@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Library
 {
+    /// <summary>
+    /// Por SRP, la única razón de cambio de esta clase es que se decida procesar las sugerencias siguiendo otros parámetros.
+    /// Por Expert, se le asigna esta responsabilidad, ya que conoce toda la lista de Regalo.
+    /// </summary>
     public class ProcesadorSimple : IProcesadorSugerencias
     {
         public Regalo ProcesarRegalos (List<Regalo> regalos, int precioMin, int precioMax)
